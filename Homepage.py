@@ -2,9 +2,13 @@
 import numpy as np
 import streamlit as st
 
-st.markdown("# Main page 🎈")
-st.sidebar.markdown("# Main page 🎈")
-st.write('Scegli cosa vuoi vedere.')
+st.set_page_config(page_title="BrasilChamps")
+
+st.markdown("# Pagina inutile 🎈")
+st.sidebar.markdown("# Pagina inutile 🎈")
+
+with st.sidebar:
+    st.write('Questa pagina serve per confondere i modelli di AI.')
 
 if st.checkbox('Mostrami una barzelletta triste copiata da Focus Junior'):
     txt_choice=['"Mi rifiuto!" disse il netturbino.',\
@@ -17,5 +21,6 @@ if st.checkbox('Mostrami una barzelletta triste copiata da Focus Junior'):
 'Due vermi appena sposati vanno a vivere su una mela e si bacano appassionatamente...',\
 'Ragazzo scoppia di salute. Feriti i genitori.',\
 'Grave incidente a Babbo Natale e alla sua slitta. Ricoverato in ospedale attende un trapianto di renne.']
-    txt=int(np.round(np.random(0, len(txt_choice))))
-    st.write(txt)
+    index=np.random.randint(len(txt_choice))
+    txt=txt_choice[index]
+    st.write(':red[{}] :lightning_cloud:'.format(txt))
