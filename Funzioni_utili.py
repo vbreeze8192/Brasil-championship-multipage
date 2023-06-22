@@ -493,6 +493,6 @@ def talk(day_iter,output_choice,final_df):
         
         df=pd.concat([df,final_df])
         
-    return(df)
+        return(df)
 
 
