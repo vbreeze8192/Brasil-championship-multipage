@@ -203,14 +203,11 @@ def d_in_future(df,Nmax,col_d='D'):
                         start=df.index[ii]
                         stop=df.index[ii+N] #da capire se viene nelle successive 3 o 4
                         if df[col_d].iloc[start:stop].sum()>0:
-                                df['{}_in_{}iter'.format(col_d,N)].loc[start]=1
+                                df['{}_in_{}iter'.format(col_d,N)].iloc[start]=1
                 df['{}_in_{}iter'.format(col_d,N)]=df['{}_in_{}iter'.format(col_d,N)].astype(int)	
         #eventualmente aggiungere colonna aggiuntiva per numero di partita di x
         return(df,out_list)
 
-
-st.markdown("# Page 2 ❄️")
-st.sidebar.markdown("# Page 2 ❄️")
 #
 def download_excel(dftoexc,name_exc='Download_Excel'):
     # buffer to use for excel writer
