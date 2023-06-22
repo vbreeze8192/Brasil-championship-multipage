@@ -2,8 +2,6 @@
 import pdb
 import pandas as pd
 import os
-import matplotlib.pyplot as plt    
-import seaborn as sns
 import pickle 
 import numpy as np
 from datetime import datetime, date,timedelta
@@ -76,4 +74,4 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
         val_df=pd.concat([val_df,temp])
     st.write('Ecco i dati completi per la giornata {}.'.format(day))
     download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
-    st.balloons()
+  
