@@ -65,13 +65,14 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     val_df=pd.DataFrame()
-    [day_iter,output_choice,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
-    squadre=list(final_df.groupby(['SQUADRA']).mean().index)
+    [day_iter,output_choice,final_df,raw]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
+    squadre=list(raw.groupby(['SQUADRA']).mean().index)
     for squadra in squadre:
         #Pari nelle prossime N partite da D=now a D=now+N
-        temp=final_df[final_df['SQUADRA']==squadra]
+        temp=raw[raw['SQUADRA']==squadra]
         (temp,outputs)=d_in_future(temp,4)
         val_df=pd.concat([val_df,temp])
     st.write('Ecco i dati completi per la giornata {}.'.format(day))
     download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
+
   

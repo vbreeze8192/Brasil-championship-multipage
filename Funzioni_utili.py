@@ -412,7 +412,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,output_choice,day='NA
         final_df['{}_probA'.format(output_choice)]=alg.predict_proba(final_df[input])[:,0]
         final_df['{}_probB'.format(output_choice)]=alg.predict_proba(final_df[input])[:,1]
         final_df=final_df.dropna()
-        return(day_iter,output_choice,final_df)
+        return(day_iter,output_choice,final_df,raw)
     
 def talk(day_iter,output_choice,final_df):
         st.title('Risultati per la giornata {}'.format(day_iter))
