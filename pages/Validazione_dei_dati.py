@@ -20,13 +20,13 @@ download_excel,file_selector,doyourstupidthings
 
 
 ###MAIN###
-st.sidebar.markdown("# Validazione nel passaro🎈")
+st.sidebar.markdown("# Validazione nel passato🎈")
 
 with st.sidebar:
     st.write('Qui facciamo le validazioni. ')
 st.title('Validazione nel passato')
 
-st.subheader("""Cosa vorresti prevedere?""")
+st.subheader("""Cosa vorresti validare?""")
 st.write('Il modello è allenato per il periodo 2012-2022 della championship del Brasile.')
 #uploaded_file = st.file_uploader("Upload Excel to explore", type=".xlsx")
 #path=os.getcwd()
