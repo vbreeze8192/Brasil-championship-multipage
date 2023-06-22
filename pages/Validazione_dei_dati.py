@@ -20,10 +20,10 @@ download_excel,file_selector,doyourstupidthings
 
 
 ###MAIN###
-st.sidebar.markdown("# Previsioni per la champions del brasile🎈")
+st.sidebar.markdown("# Validazione nel passaro🎈")
 
 with st.sidebar:
-    st.write('Qui facciamo le predizioni. ')
+    st.write('Qui facciamo le validazioni. ')
 st.title('Validazione nel passato')
 
 st.subheader("""Cosa vorresti prevedere?""")
