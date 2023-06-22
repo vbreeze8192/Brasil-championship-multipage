@@ -1,22 +1,32 @@
 #Data analysis
-import os
-import io
+import pdb
 import pandas as pd
+import os
+import matplotlib.pyplot as plt    
+import seaborn as sns
 import pickle 
 import numpy as np
 from datetime import datetime, date,timedelta
 import streamlit as st
 
+#General
+from os import walk
+from joblib import dump, load
+import warnings
+warnings.filterwarnings('ignore')
+warnings.simplefilter('ignore')
+
 #custom functions
 from Funzioni_utili import bestclassifier,train,save_pickle,team_metrics,champions_metrics,d_in_future, confMatrix,\
-download_excel,file_selector,doyourstupidthings,talk
+download_excel,file_selector,doyourstupidthings
+
 
 ###MAIN###
 st.sidebar.markdown("# Previsioni per la champions del brasile🎈")
 
 with st.sidebar:
     st.write('Qui facciamo le predizioni. ')
-st.title('Brasile 2023')
+st.title('Validazione nel passato')
 
 st.subheader("""Cosa vorresti prevedere?""")
 st.write('Il modello è allenato per il periodo 2012-2022 della championship del Brasile.')
@@ -30,9 +40,9 @@ start_year=st.text_input("Anno iniziale del dataset completo",2012)
 start_year=int(start_year)
 end_year=st.text_input("Anno finale del dataset completo",2022)
 end_year=int(end_year)
-anno_val=st.text_input("Anno in corso",2023)
+anno_val=st.text_input("Anno su cui validare",2022)
 anno_val=int(anno_val)
-day=st.text_input('Giornata che si vuole predire',10)
+day=st.text_input('Giornata che si vuole validare',10)
 day=int(day)
 #Campionato brasile. Un anno per ogni foglio
 #Alleno su tutti gli anni, passando tutti gli anni sia per la media che per la predizione. 
@@ -56,31 +66,14 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
-    [day_iter,output_choice,df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
-    final_df=talk(day_iter,output_choice,df)
-
+    val_df=pd.DataFrame()
+    [day_iter,output_choice,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
+    squadre=list(final_df.groupby(['SQUADRA']).mean().index)
+    for squadra in squadre:
+        #Pari nelle prossime N partite da D=now a D=now+N
+        temp=final_df[final_df['SQUADRA']==squadra]
+        (temp,outputs)=d_in_future(temp,4)
+        val_df=pd.concat([val_df,temp])
     st.write('Ecco i dati completi per la giornata {}.'.format(day))
-    download_excel(final_df,name_exc='Prediction_Day{}'.format(day))
+    download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
     st.balloons()
-
-#######PROSSIMI SVILUPPI##########
-## NEXT: PER I DATI CHE HO NEL PASSATO RENDERE DISPONIBILE VALIDAZIONE. XAI PER CAPIRE COME MAI. 
-## SQUADRE CAMBIANO: 3 ALL'ANNO. 
-
-##ANALISI
-# QUALE DISTRIBUZIONE HA LA SINGOLA SQUADRA NEI PAREGGI QUEST'ANNO? QUANTO NEGLI ANNI PRECEDENTI?
-# SOLO 3-4 ANNI NEL TRAINING
-# PUNTEGGIO: DOVE SI TROVA LA SQUADRA RISPETTO ALLE ALTRE?
-# PUNTEGGIO NEL PASSATO?
-# QTY PAREGGI MASSIMI E MEDI!
-
-####NUOVI INPUT
-## INTEGRARE ANCHE I PUNTI DELLA SQUADRA GG PER GIORNO E LA MEDIA LA DEV STD E MAX MIN DI TUTTE LE ALTRE SQUADRE NELLA GIORNATA CORRENTE. 
-## MEDIA E DEV STD DI PUNTI DELLA CHAMPIONSHIP E DI QUELLE PRECEDENTI
-## E ANCHE MEDIA E DEV STD DEGLI ANNI PRECEDENTI DELLA STESSA SQUADRA.
-## INFO SULLA DISTRIBUZIONE DEI PAREGGI NEL TEMPO. COME RAPPRESENTARLA? NON SOLO MAC DEI GIORNI MA MEDIA SU PARTITA E DEV STD SU PARTITA DI MAC NON PARI. 
-## COPPIA DI SQUADRE: QUANDO PAREGGIANO INSIEME RENDILO. 1. INCROCIARE PROB PAREGGIO E MOSTRARE LE COPPIE PIù ALTE. 
-## MODELLO CHE PREVEDE LA PROBABILITA' SHARP DI PAREGGIO AL GG 1, 2 3 O 4, NON LA SOMMA. 
-## MODELLO PER COPPIE: CASA/FUORI 
-## INTEGRARE MEDIA E DEV STD DELLA DISTRIBUZIONE DI GOAL NELLE ULTIME PARTITE PER SQUADRA PER COFRONTARE LE DISTRIBUZIONI 
-## MODELLINO MULTICLASSE CHE PREVEDE TUTTI E QUATTRO. 
