@@ -290,7 +290,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
     raw['HOUR']=0
     st.write(raw[col_time])
-    st.write(type(raw[col_time])
+    st.write(type(raw[col_time]))
     try:
         raw[col_time]=pd.to_datetime(raw[col_time])
     except Exception as e:
