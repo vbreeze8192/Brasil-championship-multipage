@@ -357,10 +357,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             anni_iter=[anno_val]
             nn=raw[col_day].iloc[-1]
             if day=='NA':
-                day=raw[col_day].iloc[5]
+                day=5
     elif what=='train':
             nn=raw[col_day].iloc[-1]
-            day=raw[col_day].iloc[5]
+            day=5
             anni_iter=anni
     else:
         st.write('Devi specificare se pred o val o train. Nel dubbio predico.')
