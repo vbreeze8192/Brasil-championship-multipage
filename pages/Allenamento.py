@@ -66,13 +66,13 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     
-    [raw,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day,what='val')
+    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day,what='val')
 
-    squadre=list(raw.groupby(['SQUADRA']).mean().index)
-    train_df=final_df.copy()
+    squadre=list(int_df.groupby(['SQUADRA']).mean().index)
+    train_df=int_df.copy()
     for squadra in squadre:
         #Pari nelle prossime N partite da D=now a D=now+N
-        temp=raw[raw['SQUADRA']==squadra]
+        temp=int_df[int_df['SQUADRA']==squadra]
         (temp,outputs)=d_in_future(temp,4)
         train_df=pd.concat([train_df,temp])
 
