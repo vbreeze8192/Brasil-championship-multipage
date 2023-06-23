@@ -79,13 +79,14 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
     val_df=val_df.fillna(0)
     st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
-    st.write('TOT pari effettivi {}, TOT pari previsti: {}'.format(val_df[output_choice].sum(),alg_w.predict(val_df[input]).sum()))
     st.write('Confusion matrix per primo algoritmo')
     [input,input_lower]=starting()
     cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
     st.write(cm)
     st.write('Confusion matrix per secondo algoritmo')
     cm = confusion_matrix(val_df[output_choice], alg_lp.predict(val_df[input_lower]))
+
     st.write(cm)
+
 
   
