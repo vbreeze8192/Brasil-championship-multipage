@@ -337,7 +337,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     qtymax3yrs=qty.groupby('SQUADRA').mean()
     #raw è la rappresentazione dell'anno in corso. 
     #sul singolo anno di validazione, valuta sia i gol nel futuro veri, sia la predizione fatta dal modello. 
-
+    raw_complete=raw.copy()
     raw=raw[raw[year_col]==anno_val]
     st.write('Righe per questo anno: {}'.format(raw.shape[0]))
     raw=raw.sort_values(col_day)
@@ -369,7 +369,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
         nn=day+1         
         #in che giorno nella riga
 
-    raw_complete=raw.copy()
+    
     int_df=pd.DataFrame()
     final_df=pd.DataFrame()
     for anno in anni_iter:
