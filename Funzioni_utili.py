@@ -429,6 +429,8 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 st.write(int_df)
                 print(int_df)
             logging_textbox = st.empty()
+            st.write(line_team)
+            st.write(line_df)
             st.write(int_df)
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
             final_df=final_df.fillna(0)
