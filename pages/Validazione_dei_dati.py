@@ -66,7 +66,7 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     val_df=pd.DataFrame()
-    [raw,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day)
+    [raw,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day)
     [raw,final_df,alg_w,alg_lp]=prediction(output_choice, day,raw)
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
     for squadra in squadre:
