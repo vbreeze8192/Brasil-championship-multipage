@@ -9,7 +9,7 @@ import streamlit as st
 
 #custom functions
 from Funzioni_utili import bestclassifier,train,save_pickle,team_metrics,champions_metrics,d_in_future, confMatrix,\
-download_excel,file_selector,doyourstupidthings,talk
+download_excel,file_selector,doyourstupidthings,talk, prediction
 
 ###MAIN###
 st.sidebar.markdown("# Previsioni per la champions del brasile🎈")
@@ -56,8 +56,9 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
-    [day_iter,output_choice,df,raw]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
-    final_df=talk(day_iter,output_choice,df)
+    [dict_input,input, output_choice, day_iter,raw,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
+    [day_iter,output_choice,raw,final_df,alg_w,alg_lp]=prediction(dict_input,input, output_choice, day_iter,raw)
+    final_df=talk(day_iter,output_choice,final_df)
 
     st.write('Ecco i dati completi per la giornata {}.'.format(day))
     download_excel(final_df,name_exc='Prediction_Day{}'.format(day))

@@ -6,6 +6,7 @@ import pickle
 import numpy as np
 from datetime import datetime, date,timedelta
 import streamlit as st
+from sklearn.metrics import accuracy_score, plot_confusion_matrix ,ConfusionMatrixDisplay
 
 #General
 from os import walk
@@ -16,7 +17,7 @@ warnings.simplefilter('ignore')
 
 #custom functions
 from Funzioni_utili import bestclassifier,train,save_pickle,team_metrics,champions_metrics,d_in_future, confMatrix,\
-download_excel,file_selector,doyourstupidthings
+download_excel,file_selector,doyourstupidthings, prediction, starting
 
 
 ###MAIN###
@@ -65,7 +66,8 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     val_df=pd.DataFrame()
-    [day_iter,output_choice,final_df,raw]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
+    [raw,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,output_choice,day)
+    [raw,final_df,alg_w,alg_lp]=prediction(output_choice, day,raw)
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
     for squadra in squadre:
         #Pari nelle prossime N partite da D=now a D=now+N
@@ -74,5 +76,10 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
         val_df=pd.concat([val_df,temp])
     st.write('Ecco i dati completi per la giornata {}.'.format(day))
     download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
-
+    for output in outputs:
+        st.write('Confusion matrix per primo algoritmo')
+        plot_confusion_matrix(alg_w, val_df(starting()[0]), val_df[output_choice])
+        st.write('Confusion matrix per secondo algoritmo')
+        plot_confusion_matrix(alg_lp, val_df(starting()[1]), val_df[output_choice])
+        st.pyplot()
   

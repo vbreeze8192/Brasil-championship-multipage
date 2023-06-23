@@ -17,10 +17,29 @@ from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.ensemble import ExtraTreesClassifier
 
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import accuracy_score, confusion_matrix,ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, confusion_matrix,ConfusionMatrixDisplay,plot_confusion_matrix
 from sklearn.metrics import r2_score
 
 
+def starting():
+    input_lower=['AVG_ND_3Y_S',\
+    'AVG_ND_N_S',\
+    'QTY_ND_3Y_S',\
+    'QTY_ND_N_S',\
+    'HOUR',\
+    'HoA']
+    input=['AVG_D_3Y_CH',\
+    'AVG_D_N_CH',\
+    'AVG_ND_3Y_S',\
+    'AVG_ND_N_S',\
+    'AVG_Dxd_3Y_CH',\
+    'AVG_Dxd_N_CH',\
+    'QTY_ND_3Y_S',\
+    'QTY_ND_N_S',\
+    'HOUR',\
+    'HoA']
+    return(input,input_lower)
+     
 
 #Funzioni per allenare il modello 
 def rfc(X_train, y_train,X_test,y_test):
@@ -232,17 +251,10 @@ def file_selector(folder_path='.'):
 
 
 
-def doyourstupidthings(name,year_col,col_day,anni,anno_val,output_choice,day='NA'):
-    input=['AVG_D_3Y_CH',\
-            'AVG_D_N_CH',\
-            'AVG_ND_3Y_S',\
-            'AVG_ND_N_S',\
-            'AVG_Dxd_3Y_CH',\
-            'AVG_Dxd_N_CH',\
-            'QTY_ND_3Y_S',\
-            'QTY_ND_N_S',\
-            'HOUR',\
-            'HoA']
+def doyourstupidthings(name,year_col,col_day,anni,anno_val,output_choice,input='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res',day='NA',what='pred'):
+    if input=='na':
+        ins=starting()
+        input=ins[0]
 
     original=pd.DataFrame()
     for anno in anni+[anno_val]:
@@ -253,18 +265,18 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,output_choice,day='NA
 
     st.write(':crown: Dati importati, bitches! :crown:')
     #crea colonna D con i pareggi
-    original['D']=original['Res'].copy()
-    original['D'].iloc[original['Res']=='D']=1
-    original['D'].iloc[original['Res']!='D']=0
+    original['D']=original[col_res].copy()
+    original['D'].iloc[original[col_res]=='D']=1
+    original['D'].iloc[original[col_res]!='D']=0
     #print(original)
 
     #dividi le squadre: crea 2 dataset temporanei che contengono solo le singole squadre home e away e relativo risultato
-    temp_a=original[[col_day,year_col,'Date','Time','Away','AG','D']]
-    temp_h=original[[col_day,year_col,'Date','Time','Home','HG','D']]
+    temp_a=original[[col_day,year_col,col_date,col_time,col_a,col_ag,'D']]
+    temp_h=original[[col_day,year_col,col_date,col_time,col_h,col_hg,'D']]
 
     #cambia nome delle colonne 
-    temp_a=temp_a.rename(columns={"Away": "SQUADRA", "AG": "N_GOAL"})
-    temp_h=temp_h.rename(columns={"Home": "SQUADRA", "HG": "N_GOAL"})
+    temp_a=temp_a.rename(columns={col_a: "SQUADRA", col_ag: "N_GOAL"})
+    temp_h=temp_h.rename(columns={col_h: "SQUADRA", col_hg: "N_GOAL"})
     temp_a['HoA']='0'
     temp_h['HoA']='1'
 
@@ -334,14 +346,24 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,output_choice,day='NA
     
     df=pd.DataFrame()
     st.write('	:hourglass_flowing_sand: Guardo i dati per giornata...')
-
-    nn=1
+    if what=='pred':
+        if day=='NA':
+            day=raw[col_day].iloc[-1]
+        nn=day+1
+    elif what=='val':
+            nn=len(raw[col_day])
+            if day=='NA':
+                day=raw[col_day].iloc[0]
+    else:
+        st.write('Devi specificare se pred o val. Faccio predizione e non validazione.')
+        if day=='NA':
+            day=raw[col_day].iloc[-1]
+        nn=day+1         
         #in che giorno nella riga
-    if day=='NA':
-        day=raw[col_day].iloc[-1]
+
     
     #Per ora fa la valutazione solo sulla giornata che viene fornita. 
-    for day_iter in range(day,day+nn):
+    for day_iter in range(day,nn):
         final_df=pd.DataFrame()
         int_df=pd.DataFrame()
         print('Valuto la giornata {}'.format(day_iter))
@@ -390,20 +412,19 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,output_choice,day='NA
         st.write('Ecco il dataset su cui faccio previsioni. Ho riempito i valori nulli con 0.')
         download_excel(final_df,'Pre-trained_dataset_Day{}'.format(day))
 
-        dict_input={'AVG_D_3Y_CH':'Media di pareggi per championship, calcolata sulle stagioni precedenti',\
-            'AVG_D_N_CH':'Media di pareggi per championship, calcolata sulla stagione attuale',\
-            'AVG_ND_3Y_S':'Media di non-pareggi per squadra, calcolata sulle stagioni precedenti',\
-            'AVG_ND_N_S':'Media di non-pareggi per squadra, calcolata sulla stagione attuale',\
-            'AVG_Dxd_3Y_CH':'Media di pareggi per giornata per championship, calcolata sulle stagioni passate',\
-            'AVG_Dxd_N_CH':'Media di pareggi per giornata per championship, calcolata sulla stagione presente',\
-            'QTY_ND_3Y_S':'Media del periodo massimo per stagione di giornate consecutive senza pareggi per squadra, calcolata sulle stagioni precedenti',\
-            'QTY_ND_N_S':'Quantità di giornate consecutive senza pareggi per squadra sulla stagione attuale',\
-            'HOUR':'Ora della partita',\
-            'HoA':'Indicazione su Home o Away (0: Away, 1: Home)'}
 
+        return(raw,final_df)
+    
+def prediction(output_choice, day_iter,raw,final_df,input='na',input_lower='na'):
+        if input=='na':
+            ins=starting()
+            input=ins[0]
+
+        if input_lower=='na':
+            ins=starting()
+            input_lower=ins[1]
         st.write("\n:robot_face: E mo' predico. :robot_face:")
-        st.write("""I modelli sono allenati in due versioni diverse sui dati delle squadre e della championship. Gli input utilizzati sono:""")
-        st.write(dict_input)
+
         ##Modello: predizioni per output
         nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}'.format(output_choice)))
         dict=pickle.load(open(nome_modello, 'rb'))
@@ -412,7 +433,19 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,output_choice,day='NA
         final_df['{}_probA'.format(output_choice)]=alg.predict_proba(final_df[input])[:,0]
         final_df['{}_probB'.format(output_choice)]=alg.predict_proba(final_df[input])[:,1]
         final_df=final_df.dropna()
-        return(day_iter,output_choice,final_df,raw)
+        alg_w=alg
+         ##Modello: predizioni per output, con meno input
+        
+        nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}_lower_input'.format(output_choice)))
+        dict=pickle.load(open(nome_modello, 'rb'))
+        alg=dict['Algorithm']
+        final_df['{}_lp_pred'.format(output_choice)]=alg.predict(final_df[input_lower])
+        final_df['{}_lp_probA'.format(output_choice)]=alg.predict_proba(final_df[input_lower])[:,0]
+        final_df['{}_lp_probB'.format(output_choice)]=alg.predict_proba(final_df[input_lower])[:,1]
+        final_df=final_df.dropna()
+        alg_lp=alg
+
+        return(final_df,raw,alg_w,alg_lp)
     
 def talk(day_iter,output_choice,final_df):
         st.title('Risultati per la giornata {}'.format(day_iter))
@@ -444,21 +477,6 @@ def talk(day_iter,output_choice,final_df):
 
 
         
-         ##Modello: predizioni per output, con meno input
-        input_lower=['AVG_ND_3Y_S',\
-        'AVG_ND_N_S',\
-        'QTY_ND_3Y_S',\
-        'QTY_ND_N_S',\
-        'HOUR',\
-        'HoA']
-        
-        nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}_lower_input'.format(output_choice)))
-        dict=pickle.load(open(nome_modello, 'rb'))
-        alg=dict['Algorithm']
-        final_df['{}_lp_pred'.format(output_choice)]=alg.predict(final_df[input_lower])
-        final_df['{}_lp_probA'.format(output_choice)]=alg.predict_proba(final_df[input_lower])[:,0]
-        final_df['{}_lp_probB'.format(output_choice)]=alg.predict_proba(final_df[input_lower])[:,1]
-        final_df=final_df.dropna()
 
         st.subheader("""Seconda versione""")
         st.write('Questi risultati sono ottenuti con modelli allenati su questi input:')
