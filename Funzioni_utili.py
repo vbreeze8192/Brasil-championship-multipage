@@ -37,9 +37,9 @@ def starting():
     'QTY_ND_3Y_S',\
     'QTY_ND_N_S',\
     'HOUR',\
-    'HoA',\
-    'MEAN_S',\
-    'STD_S']
+    'HoA']#,\
+    #'MEAN_S',\
+    #'STD_S']
     return(input,input_lower)
      
 
@@ -379,11 +379,12 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
 
         logging_textbox = st.empty()
-        logging_textbox.text_area("Logging: ", height=500)
+  
         for day_iter in range(day,nn):
             
             logging_textbox.write("Valuto la giornata {} dell'anno {}".format(day_iter,anno))
             df_period=raw[raw[col_day]<=day_iter] #il dataframe contiene il periodo da giornata 0 a adesso
+            st.write('colonne: {}'.format(df_period.columns))
             squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
 
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
@@ -422,10 +423,11 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
                 #Quantity di non pari da D=0 a D=now
                 line_team[input[7]]=qtymaxnows.loc[squadra].values[0]
-                
+                '''
                 #media e dev std di goal per la squadra
                 line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
                 line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
+                '''
 
                 int_df=pd.concat([int_df,line_team])
             logging_textbox = st.empty()
