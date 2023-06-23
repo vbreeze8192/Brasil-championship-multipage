@@ -384,18 +384,13 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             
             logging_textbox.write("Valuto la giornata {} dell'anno {}".format(day_iter,anno))
             df_period=raw[raw[col_day]<=day_iter] #il dataframe contiene il periodo da giornata 0 a adesso
-            st.write('colonne: {}'.format(df_period.columns))
             squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
 
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
             [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
-
-
             for squadra in squadre_day:
                 
-
                 line_team=df_period[df_period['SQUADRA']==squadra]
-
                 st.write('Linea: {}'.format(line_team.columns))
                 
                 #Media di pari negli ultimi 3 anni per campionato
@@ -432,7 +427,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 int_df=pd.concat([int_df,line_team])
             logging_textbox = st.empty()
 
-            #final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
+            final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
             final_df=final_df.fillna(0)
             #per training il df è int_df
         st.write('Ecco il dataset su cui faccio previsioni. Ho riempito i valori nulli con 0.')
