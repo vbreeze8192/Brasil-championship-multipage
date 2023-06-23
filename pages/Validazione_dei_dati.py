@@ -79,8 +79,8 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     for output in outputs:
         st.write('Confusion matrix per primo algoritmo')
         [input,input_lower]=starting()
-        plot_confusion_matrix(alg_w, val_df(input), val_df[output_choice])
+        plot_confusion_matrix(alg_w, val_df[input], val_df[output_choice])
         st.write('Confusion matrix per secondo algoritmo')
-        plot_confusion_matrix(alg_lp, val_df(input_lower), val_df[output_choice])
+        plot_confusion_matrix(alg_lp, val_df[input_lower], val_df[output_choice])
         st.pyplot()
   
