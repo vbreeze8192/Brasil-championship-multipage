@@ -66,8 +66,8 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
-    [final_df,alg_w,alg_lp]=prediction(output_choice,final_df)
-    squadre=list(final_df.groupby(['SQUADRA']).mean().index)
+    [int_df,alg_w,alg_lp]=prediction(output_choice,int_df)
+    squadre=list(int_df.groupby(['SQUADRA']).mean().index)
     val_df=int_df.copy()
     for squadra in squadre:
         #Pari nelle prossime N partite da D=now a D=now+N
