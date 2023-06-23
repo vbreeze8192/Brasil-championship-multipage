@@ -251,7 +251,7 @@ def file_selector(folder_path='.'):
 
 
 
-def doyourstupidthings(name,year_col,col_day,anni,anno_val,inputs='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res',day='NA',what='pred'):
+def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',inputs='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res'):
     if inputs=='na':
         [input,input_lower]=starting()
     else:
@@ -416,7 +416,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,inputs='na',col_date=
 
         return(raw,final_df)
     
-def prediction(output_choice, day_iter,raw,final_df,input='na',input_lower='na'):
+def prediction(output_choice,final_df,input='na',input_lower='na'):
         if input=='na':
             [input,b]=starting()
 
@@ -444,7 +444,7 @@ def prediction(output_choice, day_iter,raw,final_df,input='na',input_lower='na')
         final_df=final_df.dropna()
         alg_lp=alg
 
-        return(final_df,raw,alg_w,alg_lp)
+        return(final_df,alg_w,alg_lp)
     
 def talk(day_iter,output_choice,final_df):
         st.title('Risultati per la giornata {}'.format(day_iter))
