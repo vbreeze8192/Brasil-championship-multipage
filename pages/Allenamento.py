@@ -62,7 +62,7 @@ st.write('Il modello prevede la probabilità che una squadra faccia almeno un pa
 outputs=['D_in_4iter','D_in_3iter','D_in_2iter','D_in_1iter']
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
-if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
+if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
@@ -78,8 +78,10 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     for output in outputs:
         st.write('Sto calcolando questo: {}'.format(output))
         [input,input_lower]=starting()
+        st.write("\n:robot_face: E mo' m'annleno. :robot_face:")
         [alg,dicts,nome_modello]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello='{}_model_v02'.format(output))
         #final_df['{}_prob'.format(output)]=alg.predict_proba(final_df[input])
+        
         train_df=train_df.fillna(-1)
         st.write('Confusion matrix per algoritmo')
         st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')

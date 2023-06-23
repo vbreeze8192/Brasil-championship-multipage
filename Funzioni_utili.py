@@ -37,7 +37,9 @@ def starting():
     'QTY_ND_3Y_S',\
     'QTY_ND_N_S',\
     'HOUR',\
-    'HoA']
+    'HoA',\
+    'MEAN_S',\
+    'STD_S']
     return(input,input_lower)
      
 
@@ -418,6 +420,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
                 #Quantity di non pari da D=0 a D=now
                 line_team[input[7]]=qtymaxnows.loc[squadra].values[0]
+                
+                #media e dev std di goal per la squadra
+                line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
+                line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
                 
                 int_df=pd.concat([int_df,line_team])
             logging_textbox = st.empty()
