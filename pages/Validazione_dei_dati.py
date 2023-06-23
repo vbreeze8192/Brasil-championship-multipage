@@ -65,7 +65,7 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     
-    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day,what='val')
+    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
     [final_df,alg_w,alg_lp]=prediction(output_choice,final_df)
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
     val_df=final_df.copy()
@@ -74,8 +74,8 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
         temp=raw[raw['SQUADRA']==squadra]
         (temp,outputs)=d_in_future(temp,4)
         val_df=pd.concat([val_df,temp])
-    st.write('Ecco i dati completi per la giornata {}.'.format(day))
-    download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
+    st.write('Ecco i dati completi')
+    download_excel(val_df,name_exc='Prediction_Complete_{}'.format(anno_val))
     val_df=val_df.fillna(-1)
     st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
     st.write('Confusion matrix per primo algoritmo')
