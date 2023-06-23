@@ -21,14 +21,14 @@ download_excel,file_selector,doyourstupidthings, prediction, starting
 
 
 ###MAIN###
-st.sidebar.markdown("# Validazione nel passato🎈")
+st.sidebar.markdown("# Allenamento dei modelli🎈")
 
 with st.sidebar:
-    st.write('Qui facciamo le validazioni. ')
-st.title('Validazione nel passato')
+    st.write('Qui facciamo l'allenamento. ')
+st.title('Allenamento')
 
-st.subheader("""Cosa vorresti validare?""")
-st.write('Il modello è allenato per il periodo 2012-2022 della championship del Brasile.')
+st.subheader("""Struttura il dataset di training""")
+st.write('Scegli in periodo di training e validazione.')
 #uploaded_file = st.file_uploader("Upload Excel to explore", type=".xlsx")
 #path=os.getcwd()
 
@@ -41,8 +41,7 @@ end_year=st.text_input("Anno finale del dataset completo",2022)
 end_year=int(end_year)
 anno_val=st.text_input("Anno su cui validare",2022)
 anno_val=int(anno_val)
-day=st.text_input('Giornata che si vuole validare',10)
-day=int(day)
+
 #Campionato brasile. Un anno per ogni foglio
 #Alleno su tutti gli anni, passando tutti gli anni sia per la media che per la predizione. 
 
@@ -66,7 +65,7 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     
-    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day,what='val')
+    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
 
     squadre=list(int_df.groupby(['SQUADRA']).mean().index)
     train_df=int_df.copy()
