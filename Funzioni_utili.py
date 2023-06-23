@@ -393,7 +393,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             for squadra in squadre_day:
                 
 
-                line_team=raw[raw['SQUADRA']==squadra]
+                line_team=df_period[df_period['SQUADRA']==squadra]
 
                 st.write('Linea: {}'.format(line_team))
                 
@@ -429,6 +429,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
                 int_df=pd.concat([int_df,line_team])
             logging_textbox = st.empty()
+
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
             final_df=final_df.fillna(0)
             #per training il df è int_df
