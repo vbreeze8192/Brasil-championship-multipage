@@ -291,8 +291,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     raw['HOUR']=0
   
     for ii in range(0,len(raw)):
-        st.write(ii)
-        raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
+        try:
+            raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
+        except Exception as e:
+             st.write('Found error: {}, iter {}'.format(e,ii))
     st.write(raw['HOUR'])
     '''
     for col in [col_hg,col_ag,col_res]:
