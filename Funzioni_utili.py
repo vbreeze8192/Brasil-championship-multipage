@@ -394,6 +394,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 
 
                 line_team=raw[raw['SQUADRA']==squadra]
+                
                 st.write(line_team)
                 
                 #Media di pari negli ultimi 3 anni per campionato
