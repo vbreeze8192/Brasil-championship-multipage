@@ -285,22 +285,17 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     #UNISCI I DUE DF
     raw=pd.concat([temp_h, temp_a])
     st.write(':floppy_disk: Ho fatto il dataset completo. Ora estraggo i dati utili: squadre, pareggi, altre amenità.')
-    #print(raw)
     #estrai lista delle squadre
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
-    
-    #print(squadre)
-    #dividi il df in 3 anni precedenti e anno presente. Capire se estrae numero o string
-
-    #raw['Date']=pd.to_datetime(raw['Date'])
-    #print(raw['Date'].iloc[0])
-    #raw[year_col]=raw['Date'].dt.year
 
     raw['HOUR']=0
+    raw[col_time]=pd.to_datetime(raw[col_time])
     for ii in raw.index:
-        raw['HOUR'].iloc[ii]=int(raw['Time'].iloc[ii].hour)
-    for col in ['HG','AG','Res']:
+        raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
+    '''
+    for col in [col_hg,col_ag,col_res]:
         raw[col]=0
+    '''
 
     #st.write('Valori non validi: {}'.format(raw.isna().sum()))
     raw=raw.fillna(0)
@@ -424,7 +419,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 #media e dev std di goal per la squadra
                 line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
                 line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
-                
+
                 int_df=pd.concat([int_df,line_team])
             logging_textbox = st.empty()
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
