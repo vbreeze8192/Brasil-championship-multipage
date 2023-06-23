@@ -389,7 +389,8 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
             [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
             for squadra in squadre_day:
-                line_team=df_period[df_period['SQUADRA']==squadra]
+                line_df=df_period[df_period[col_day]==day_iter]
+                line_team=line_df[line_df['SQUADRA']==squadra]
                 st.write('Linea: {}'.format(line_team.columns))
                 print('Linea: {}'.format(line_team.columns))
                 
