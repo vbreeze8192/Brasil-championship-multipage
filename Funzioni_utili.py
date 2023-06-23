@@ -289,7 +289,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
 
     raw['HOUR']=0
-    raw[col_time]=pd.to_datetime(raw[col_time])
+    try:
+        raw[col_time]=pd.to_datetime(raw[col_time])
+    except Exception as e:
+         pass
     for ii in raw.index:
         raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
     '''
