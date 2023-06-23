@@ -289,14 +289,15 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
 
     raw['HOUR']=0
-    st.write(raw[col_time])
-    st.write(type(raw[col_time]))
+    
+
     try:
         raw[col_time]=pd.to_datetime(raw[col_time])
     except Exception as e:
          pass
     for ii in range(0,len(raw)):
-        raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
+        raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii])
+    st.write(raw['HOUR'])
     '''
     for col in [col_hg,col_ag,col_res]:
         raw[col]=0
