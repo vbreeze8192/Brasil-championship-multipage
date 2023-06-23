@@ -296,7 +296,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     except Exception as e:
          pass
     for ii in range(0,len(raw)):
-        raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii])
+        raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
     st.write(raw['HOUR'])
     '''
     for col in [col_hg,col_ag,col_res]:
