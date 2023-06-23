@@ -24,7 +24,7 @@ download_excel,file_selector,doyourstupidthings, prediction, starting
 st.sidebar.markdown("# Allenamento dei modelli🎈")
 
 with st.sidebar:
-    st.write('Qui facciamo l'allenamento. ')
+    st.write("Qui facciamo l'allenamento.")
 st.title('Allenamento')
 
 st.subheader("""Struttura il dataset di training""")
