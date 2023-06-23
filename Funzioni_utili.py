@@ -353,11 +353,11 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
         nn=day+1
     elif what=='val':
             anni_iter=[anno_val]
-            nn=raw[col_day].iloc[len(raw[col_day])]
+            nn=raw[col_day].iloc[-1]
             if day=='NA':
                 day=raw[col_day].iloc[0]
     elif what=='train':
-            nn=raw[col_day].iloc[len(raw[col_day])]
+            nn=raw[col_day].iloc[-1]
             day=raw[col_day].iloc[0]
             anni_iter=anni
     else:
