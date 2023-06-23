@@ -296,7 +296,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
         except Exception as e:
              tl=st.empty()
              tl.write(':red[Found error: {}, iter {}]'.format(e,ii))
-             tl=tl.empty()
+             
     '''
     for col in [col_hg,col_ag,col_res]:
         raw[col]=0
@@ -393,8 +393,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 line_df=df_period[df_period[col_day]==day_iter]
                 line_team=line_df[line_df['SQUADRA']==squadra]
                 st.write('Linea: {}'.format(line_team.columns))
-                print('Linea: {}'.format(line_team.columns))
-                
+              
                 #Media di pari negli ultimi 3 anni per campionato
                 line_team[input[0]]=avg3yrch
 
@@ -430,7 +429,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 st.write(int_df)
                 print(int_df)
             logging_textbox = st.empty()
-
+            st.write(int_df)
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
             final_df=final_df.fillna(0)
             #per training il df è int_df
