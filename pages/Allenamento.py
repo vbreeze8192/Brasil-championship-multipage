@@ -74,15 +74,17 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
         st.write('Sto calcolando questo: {}'.format(output))
         [input,input_lower]=starting()
         st.write("\n:robot_face: E mo' m'annleno. :robot_face:")
+        train_df=train_df.fillna(0)
+        download_excel(train_df,name_exc='Training')
         [alg,dicts,nome_modello]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello='{}_model_v02'.format(output))
         #final_df['{}_prob'.format(output)]=alg.predict_proba(final_df[input])
         
-        train_df=train_df.fillna(-1)
+        
         st.write('Confusion matrix per algoritmo')
         st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
         cm = confusion_matrix(train_df[output], alg.predict(train_df[input]))
         st.write(cm)
-    download_excel(train_df,name_exc='Training')
+    
 
  
     
