@@ -78,8 +78,9 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
     for output in outputs:
         st.write('Confusion matrix per primo algoritmo')
-        plot_confusion_matrix(alg_w, val_df(starting()[0]), val_df[output_choice])
+        [input,input_lower]=starting()
+        plot_confusion_matrix(alg_w, val_df(input), val_df[output_choice])
         st.write('Confusion matrix per secondo algoritmo')
-        plot_confusion_matrix(alg_lp, val_df(starting()[1]), val_df[output_choice])
+        plot_confusion_matrix(alg_lp, val_df(input_lower), val_df[output_choice])
         st.pyplot()
   
