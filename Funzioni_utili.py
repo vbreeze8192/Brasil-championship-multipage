@@ -38,7 +38,7 @@ def starting():
     'QTY_ND_N_S',\
     'HOUR',\
     'HoA']
-    return([input,input_lower])
+    return(input,input_lower)
      
 
 #Funzioni per allenare il modello 
@@ -253,9 +253,7 @@ def file_selector(folder_path='.'):
 
 def doyourstupidthings(name,year_col,col_day,anni,anno_val,inputs='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res',day='NA',what='pred'):
     if inputs=='na':
-        ins=starting()
-        input=ins[0]
-
+        [input,input_lower]=starting()
     else:
         input=inputs
 
@@ -420,12 +418,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,inputs='na',col_date=
     
 def prediction(output_choice, day_iter,raw,final_df,input='na',input_lower='na'):
         if input=='na':
-            ins=starting()
-            input=ins[0]
+            [input,b]=starting()
 
         if input_lower=='na':
-            ins=starting()
-            input_lower=ins[1]
+            [a,input_lower]=starting()
         st.write("\n:robot_face: E mo' predico. :robot_face:")
 
         ##Modello: predizioni per output
