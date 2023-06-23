@@ -256,7 +256,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,inputs='na',col_date=
         [input,input_lower]=starting()
     else:
         input=inputs
-
+    st.write(input)
     original=pd.DataFrame()
     for anno in anni+[anno_val]:
         anno=str(anno)
