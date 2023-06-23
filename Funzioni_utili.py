@@ -347,68 +347,82 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     df=pd.DataFrame()
     st.write('	:hourglass_flowing_sand: Guardo i dati per giornata...')
     if what=='pred':
+        anni_iter=[anno_val]
         if day=='NA':
             day=raw[col_day].iloc[-1]
         nn=day+1
     elif what=='val':
-            nn=len(raw[col_day])
+            anni_iter=[anno_val]
+            nn=raw[col_day].iloc[len(raw[col_day])]
             if day=='NA':
                 day=raw[col_day].iloc[0]
+    elif what=='train':
+            nn=raw[col_day].iloc[len(raw[col_day])]
+            day=raw[col_day].iloc[0]
+            anni_iter=anni
     else:
-        st.write('Devi specificare se pred o val. Faccio predizione e non validazione.')
+        st.write('Devi specificare se pred o val o train. Nel dubbio predico.')
         if day=='NA':
             day=raw[col_day].iloc[-1]
         nn=day+1         
         #in che giorno nella riga
 
-    
-    #Per ora fa la valutazione solo sulla giornata che viene fornita. 
-    for day_iter in range(day,nn):
-        final_df=pd.DataFrame()
+    raw_complete=raw.copy()
+   
+    for anno in anni_iter:
+        raw=raw_complete[raw_complete[year_col]==anno]
+        raw=raw.sort_values(col_day)
+
+
+
         int_df=pd.DataFrame()
-        print('Valuto la giornata {}'.format(day_iter))
-        df_period=raw[raw[col_day]<=day_iter] #il dataframe contiene il periodo da giornata 0 a adesso
-        squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
-        st.write(':white_check_mark: In questa giornata ci sono queste squadre:')
-        st.write(squadre_day)
-        [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
-        [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
+        final_df=pd.DataFrame()
+        print('Guardo i dati per giornata, ci metto qualche minuto!')
+        for day_iter in range(day,nn):
+            print('Valuto la giornata {}'.format(day_iter))
+            df_period=raw[raw[col_day]<=day_iter] #il dataframe contiene il periodo da giornata 0 a adesso
+            squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
+            st.write(':white_check_mark: In questa giornata ci sono queste squadre:')
+            st.write(squadre_day)
+            [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
+            [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
 
 
-        for squadra in squadre_day:
+            for squadra in squadre_day:
 
-            line_team=raw[raw['SQUADRA']==squadra]
-            
-            #Media di pari negli ultimi 3 anni per campionato
-            line_team[input[0]]=avg3yrch
+                line_team=raw[raw['SQUADRA']==squadra]
+                
+                #Media di pari negli ultimi 3 anni per campionato
+                line_team[input[0]]=avg3yrch
 
-            #Media di pari negli ultimi giorni da D=0 a D=now
-            line_team[input[1]]=avgnowch
-            try:
-                #Media di non pari negli ultimi 3 anni per squadra
-                line_team[input[2]]=nd3yrs.loc[squadra].values[0]
-            except Exception as e:
-                st.write(":red[Sto avendo problemi con la squadra {}. Forse non c'era nel training, oppure l'hai scritto male!]".format(squadra))
+                #Media di pari negli ultimi giorni da D=0 a D=now
+                line_team[input[1]]=avgnowch
+                try:
+                    #Media di non pari negli ultimi 3 anni per squadra
+                    line_team[input[2]]=nd3yrs.loc[squadra].values[0]
+                except Exception as e:
+                    st.write(":red[Sto avendo problemi con la squadra {}. Forse non c'era nel training, oppure l'hai scritto male!]".format(squadra))
 
-            #Media di non pari negli ultimi giorni da D=0 a D=now
-            line_team[input[3]]=ndnows[squadra]
+                #Media di non pari negli ultimi giorni da D=0 a D=now
+                line_team[input[3]]=ndnows[squadra]
 
-            #Media di pari per giornata negli ultimi 3 anni per campionato
-            line_team[input[4]]=avgdxd3yrch
+                #Media di pari per giornata negli ultimi 3 anni per campionato
+                line_team[input[4]]=avgdxd3yrch
 
-            #Media di pari per giornata negli ultimi giorni da D=0 a D=now
-            line_team[input[5]]=avgdxdnowch
+                #Media di pari per giornata negli ultimi giorni da D=0 a D=now
+                line_team[input[5]]=avgdxdnowch
 
-            #Quantity di non pari longer negli ultimi 3 anni
-            line_team[input[6]]=qtymax3yrs.loc[squadra].values[0]
+                #Quantity di non pari longer negli ultimi 3 anni
+                line_team[input[6]]=qtymax3yrs.loc[squadra].values[0]
 
-            #Quantity di non pari da D=0 a D=now
-            line_team[input[7]]=qtymaxnows.loc[squadra].values[0]
-            
-            int_df=pd.concat([int_df,line_team])
+                #Quantity di non pari da D=0 a D=now
+                line_team[input[7]]=qtymaxnows.loc[squadra].values[0]
+                
+                int_df=pd.concat([int_df,line_team])
 
-        final_df=int_df[int_df[col_day]==day_iter] #final df contiene la sola riga del giorno x
-        final_df=final_df.fillna(0)
+            final_df=int_df[int_df[col_day]==day_iter] #final df contiene la sola riga del giorno x
+            final_df=final_df.fillna(0)
+            #per training il df è int_df
         st.write('Ecco il dataset su cui faccio previsioni. Ho riempito i valori nulli con 0.')
         download_excel(final_df,'Pre-trained_dataset_Day{}'.format(day))
 
