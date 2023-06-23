@@ -6,7 +6,7 @@ import pickle
 import numpy as np
 from datetime import datetime, date,timedelta
 import streamlit as st
-from sklearn.metrics import accuracy_score, plot_confusion_matrix ,ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay
 
 #General
 from os import walk
@@ -80,8 +80,8 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     for output in outputs:
         st.write('Confusion matrix per primo algoritmo')
         [input,input_lower]=starting()
-        plot_confusion_matrix(alg_w, val_df[input], val_df[output_choice])
+        cm = confusion_matrix(val_df[output_choice], alg_w(val_df[input]))
         st.write('Confusion matrix per secondo algoritmo')
-        plot_confusion_matrix(alg_lp, val_df[input_lower], val_df[output_choice])
+        cm = confusion_matrix(val_df[output_choice], alg_lp(val_df[input_lower]))
         st.pyplot()
   
