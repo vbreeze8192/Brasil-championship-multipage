@@ -77,7 +77,7 @@ if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
         val_df=pd.concat([val_df,temp])
     st.write('Ecco i dati completi per la giornata {}.'.format(day))
     download_excel(val_df,name_exc='Prediction_Day{}'.format(day))
-    val_df=val_df.fillna(0)
+    val_df=val_df.fillna(-1)
     st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
     st.write('Confusion matrix per primo algoritmo')
     [input,input_lower]=starting()
