@@ -391,6 +391,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             for squadra in squadre_day:
                 line_team=df_period[df_period['SQUADRA']==squadra]
                 st.write('Linea: {}'.format(line_team.columns))
+                print('Linea: {}'.format(line_team.columns))
                 
                 #Media di pari negli ultimi 3 anni per campionato
                 line_team[input[0]]=avg3yrch
@@ -425,6 +426,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
                 int_df=pd.concat([int_df,line_team])
                 st.write(int_df)
+                print(int_df)
             logging_textbox = st.empty()
 
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
