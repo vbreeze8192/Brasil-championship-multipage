@@ -41,8 +41,7 @@ end_year=st.text_input("Anno finale del dataset completo",2022)
 end_year=int(end_year)
 anno_val=st.text_input("Anno su cui validare",2022)
 anno_val=int(anno_val)
-day=st.text_input('Giornata che si vuole validare',10)
-day=int(day)
+
 #Campionato brasile. Un anno per ogni foglio
 #Alleno su tutti gli anni, passando tutti gli anni sia per la media che per la predizione. 
 
@@ -66,7 +65,7 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     
-    [raw,final_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day,what='val')
+    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day,what='val')
     [final_df,alg_w,alg_lp]=prediction(output_choice,final_df)
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
     val_df=final_df.copy()
