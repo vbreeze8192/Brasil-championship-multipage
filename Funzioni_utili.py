@@ -430,7 +430,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             final_df=final_df.fillna(0)
             #per training il df è int_df
         st.write('Ecco il dataset su cui faccio previsioni. Ho riempito i valori nulli con 0.')
-        download_excel(final_df,'Pre-trained_dataset_Day{}'.format(day))
+        download_excel(final_df,'Pre-training_dataset_Day{}'.format(day))
 
 
         return(raw,final_df,int_df)
