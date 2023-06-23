@@ -357,10 +357,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             anni_iter=[anno_val]
             nn=raw[col_day].iloc[-1]
             if day=='NA':
-                day=raw[col_day].iloc[0]
+                day=raw[col_day].iloc[5]
     elif what=='train':
             nn=raw[col_day].iloc[-1]
-            day=raw[col_day].iloc[0]
+            day=raw[col_day].iloc[5]
             anni_iter=anni
     else:
         st.write('Devi specificare se pred o val o train. Nel dubbio predico.')
@@ -386,7 +386,6 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             logging_textbox.write("Valuto la giornata {} dell'anno {}".format(day_iter,anno))
             df_period=raw[raw[col_day]<=day_iter] #il dataframe contiene il periodo da giornata 0 a adesso
             squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
-            st.write(squadre_day)
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
             [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
 
@@ -430,9 +429,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 st.write(int_df)
                 print(int_df)
             logging_textbox = st.empty()
-            st.write(line_team)
-            st.write(line_df)
-            st.write(int_df)
+
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
             final_df=final_df.fillna(0)
             #per training il df è int_df
