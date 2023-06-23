@@ -294,7 +294,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     except Exception as e:
          pass
     for ii in raw.index:
-        raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
+        raw['HOUR'].iloc[ii]=int(pd.to_datetime(raw[col_time].iloc[ii].hour))
     '''
     for col in [col_hg,col_ag,col_res]:
         raw[col]=0
