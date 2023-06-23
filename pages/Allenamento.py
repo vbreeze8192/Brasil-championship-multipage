@@ -52,20 +52,15 @@ anni=[*range(start_year,end_year+1)] #esclude 'l'ultimo anno
 #col_raw=['Giornata','Date','Time','HomeTeam','AwayTeam','FTHG','FTAG','FTR']
 col_raw=['Country','League','Season','Date','Time','Home','Away','HG','AG','Res']
 
-output_select = st.radio(
-    "Su quanti giorni vuoi allenare la cumulata dei pareggi?",
-    ('1','2','3','4'))
-
-output_choice = 'D_in_{}iter'.format(output_select)
 #'D_in_1iter', 'D_in_2iter', 'D_in_3iter',
-st.write('Il modello prevede la probabilità che una squadra faccia almeno un pareggio nelle prossime {} giornate.'.format(output_select))
+st.write('Il modello prevede la probabilità che una squadra faccia almeno un pareggio nelle prossime 1, 2, 3 e 4 giornate.')
 outputs=['D_in_4iter','D_in_3iter','D_in_2iter','D_in_1iter']
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
 if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     
-    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
+    [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='train')
 
     squadre=list(int_df.groupby(['SQUADRA']).mean().index)
     train_df=int_df.copy()
@@ -85,7 +80,7 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
         train_df=train_df.fillna(-1)
         st.write('Confusion matrix per algoritmo')
         st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
-        cm = confusion_matrix(train_df[output_choice], alg.predict(train_df[input]))
+        cm = confusion_matrix(train_df[output], alg.predict(train_df[input]))
         st.write(cm)
     download_excel(train_df,name_exc='Training')
 
