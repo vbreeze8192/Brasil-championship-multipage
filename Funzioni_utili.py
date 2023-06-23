@@ -38,7 +38,7 @@ def starting():
     'QTY_ND_N_S',\
     'HOUR',\
     'HoA']
-    return(input,input_lower)
+    return([input,input_lower])
      
 
 #Funzioni per allenare il modello 
@@ -258,8 +258,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,inputs='na',col_date=
 
     else:
         input=inputs
-    st.write(starting())
-    st.write(input)
+
     original=pd.DataFrame()
     for anno in anni+[anno_val]:
         anno=str(anno)
