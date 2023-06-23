@@ -251,13 +251,15 @@ def file_selector(folder_path='.'):
 
 
 
-def doyourstupidthings(name,year_col,col_day,anni,anno_val,input='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res',day='NA',what='pred'):
-    if input=='na':
+def doyourstupidthings(name,year_col,col_day,anni,anno_val,inputs='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res',day='NA',what='pred'):
+    if inputs=='na':
         ins=starting()
         input=ins[0]
+
+    else:
+        input=inputs
     st.write(ins)
     st.write(input)
-
     original=pd.DataFrame()
     for anno in anni+[anno_val]:
         anno=str(anno)
