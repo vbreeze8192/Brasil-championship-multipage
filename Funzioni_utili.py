@@ -389,7 +389,6 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
             [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
             for squadra in squadre_day:
-                
                 line_team=df_period[df_period['SQUADRA']==squadra]
                 st.write('Linea: {}'.format(line_team.columns))
                 
@@ -425,6 +424,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 '''
 
                 int_df=pd.concat([int_df,line_team])
+                st.write(int_df)
             logging_textbox = st.empty()
 
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
