@@ -289,13 +289,13 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
 
     raw['HOUR']=0
-  
+    tl=st.empty()
     for ii in range(0,len(raw)):
         try:
             raw['HOUR'].iloc[ii]=int(raw[col_time].iloc[ii].hour)
         except Exception as e:
-             tl=st.empty()
-             tl.write(':red[Found error: {}, iter {}]'.format(e,ii))
+            with tl.container():
+                st.write(':red[Found error: {}, iter {}]'.format(e,ii))
              
     '''
     for col in [col_hg,col_ag,col_res]:
@@ -393,7 +393,6 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             for squadra in squadre_day:
                 line_df=df_period[df_period[col_day]==day_iter]
                 line_team=line_df[line_df['SQUADRA']==squadra]
-                st.write('Linea: {}'.format(line_team.columns))
               
                 #Media di pari negli ultimi 3 anni per campionato
                 line_team[input[0]]=avg3yrch
