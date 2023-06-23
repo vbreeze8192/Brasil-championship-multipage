@@ -369,15 +369,15 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
         #in che giorno nella riga
 
     raw_complete=raw.copy()
-   
+    int_df=pd.DataFrame()
+    final_df=pd.DataFrame()
     for anno in anni_iter:
         raw=raw_complete[raw_complete[year_col]==anno]
         raw=raw.sort_values(col_day)
 
 
 
-        int_df=pd.DataFrame()
-        final_df=pd.DataFrame()
+
         logging_textbox = st.empty()
         logging_textbox.text_area("Logging: ", height=500)
         for day_iter in range(day,nn):
