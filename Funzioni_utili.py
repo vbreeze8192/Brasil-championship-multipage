@@ -386,9 +386,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             logging_textbox.write("Valuto la giornata {} dell'anno {}".format(day_iter,anno))
             df_period=raw[raw[col_day]<=day_iter] #il dataframe contiene il periodo da giornata 0 a adesso
             squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
-
+            st.write(squadre_day)
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
             [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
+
             for squadra in squadre_day:
                 line_df=df_period[df_period[col_day]==day_iter]
                 line_team=line_df[line_df['SQUADRA']==squadra]
