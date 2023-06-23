@@ -377,13 +377,14 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
         int_df=pd.DataFrame()
         final_df=pd.DataFrame()
-        print('Guardo i dati per giornata, ci metto qualche minuto!')
+        logging_textbox = st.empty()
+        logging_textbox.text_area("Logging: ", height=500)
         for day_iter in range(day,nn):
-            print('Valuto la giornata {}'.format(day_iter))
+            
+            logging_textbox.write("Valuto la giornata {} dell'anno {}".format(day_iter,anno))
             df_period=raw[raw[col_day]<=day_iter] #il dataframe contiene il periodo da giornata 0 a adesso
             squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
-            st.write(':white_check_mark: In questa giornata ci sono queste squadre:')
-            st.write(squadre_day)
+
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
             [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
 
@@ -419,7 +420,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 line_team[input[7]]=qtymaxnows.loc[squadra].values[0]
                 
                 int_df=pd.concat([int_df,line_team])
-
+            logging_textbox = st.empty()
             final_df=int_df[int_df[col_day]==day_iter] #final df contiene la sola riga del giorno x
             final_df=final_df.fillna(0)
             #per training il df è int_df
