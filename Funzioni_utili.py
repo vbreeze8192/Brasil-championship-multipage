@@ -430,7 +430,6 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 
                 #media e dev std di goal per la squadra
                 line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
-                st.write(line_team[input[8]])
                 line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
                 
 
