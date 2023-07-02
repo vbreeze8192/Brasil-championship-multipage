@@ -39,9 +39,9 @@ def starting():
     'QTY_ND_3Y_S',\
     'QTY_ND_N_S',\
     'HOUR',\
-    'HoA']#,\
-    #'MEAN_S',\
-    #'STD_S']
+    'HoA'\
+    'MEAN_S',\
+    'STD_S']
     return(input,input_lower)
      
 
