@@ -17,7 +17,9 @@ from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.ensemble import ExtraTreesClassifier
 
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import accuracy_score, confusion_matrix,ConfusionMatrixDisplay,plot_confusion_matrix
+#from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, confusion_matrix,plot_confusion_matrix
+
 from sklearn.metrics import r2_score
 
 
@@ -69,7 +71,10 @@ def rfc(X_train, y_train,X_test,y_test):
     print('Best hyperparameters:',  rand_search.best_params_)
     # Generate predictions with the best model
     y_pred = best_rf.predict(X_test)
-    confMatrix(y_test, y_pred)
+    #confMatrix(y_test, y_pred)
+    st.write('Confusion matrix per secondo algoritmo')
+    cm = confusion_matrix(y_test,best_rf.predict(X_test))
+    st.write(cm)
 
 
     return(best_rf,rand_search.score(X_test, y_test))
