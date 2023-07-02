@@ -262,6 +262,7 @@ def file_selector(folder_path='.'):
 def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',inputs='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res'):
     if inputs=='na':
         [input,input_lower]=starting()
+        st.write(input)
     else:
         input=inputs
     original=pd.DataFrame()
