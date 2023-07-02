@@ -428,6 +428,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 line_team[input[7]]=qtymaxnows.loc[squadra].values[0]
                 
                 #media e dev std di goal per la squadra
+                st.write(df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean())
                 line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
                 line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
                 
