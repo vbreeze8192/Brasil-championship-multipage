@@ -45,8 +45,9 @@ def starting():
 
 #Funzioni per allenare il modello 
 def rfc(X_train, y_train,X_test,y_test):
-    param_dist = {'n_estimators': np.random.randint(50,high=500),
-            'max_depth': np.random.randint(1,high=20)}
+    #np.random.randint(50,high=500)
+    param_dist = {'n_estimators': [20,50,100,200,300],
+            'max_depth': [10,30,50,60,100]}
 
     # Create a random forest classifier
     rf = RandomForestClassifier()
