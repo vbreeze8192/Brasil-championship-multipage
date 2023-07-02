@@ -80,7 +80,7 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
         #final_df['{}_prob'.format(output)]=alg.predict_proba(final_df[input])
         
         
-        st.write('Confusion matrix per algoritmo')
+        st.write('Confusion matrix su tutto il dataset')
         st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
         cm = confusion_matrix(train_df[output], alg.predict(train_df[input]))
         st.write(cm)

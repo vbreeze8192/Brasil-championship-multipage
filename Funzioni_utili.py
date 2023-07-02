@@ -73,7 +73,7 @@ def rfc(X_train, y_train,X_test,y_test):
     # Generate predictions with the best model
     y_pred = best_rf.predict(X_test)
     #confMatrix(y_test, y_pred)
-    st.write('Confusion matrix per secondo algoritmo')
+    st.write('Confusion matrix su test set')
     cm = confusion_matrix(y_test,best_rf.predict(X_test))
     st.write(cm)
 
