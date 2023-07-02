@@ -428,8 +428,8 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 line_team[input[7]]=qtymaxnows.loc[squadra].values[0]
                 
                 #media e dev std di goal per la squadra
-                st.write(df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean())
                 line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
+                st.write(line_team[input[8]])
                 line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
                 
 
@@ -441,7 +441,8 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             #per training il df è int_df
         st.write('Ecco il dataset su cui faccio previsioni. Ho riempito i valori nulli con 0.')
         download_excel(final_df,'Pre-training_dataset_Day{}'.format(day))
-
+        st.write("Ecco il dataset su cui faccio l'allenamento. Ho riempito i valori nulli con 0.")
+        download_excel(int_df,'Pre-training_dataset_whole')
 
         return(raw,final_df,int_df)
     
