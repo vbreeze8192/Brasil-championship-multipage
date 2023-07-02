@@ -49,8 +49,8 @@ def starting():
 #Funzioni per allenare il modello 
 def rfc(X_train, y_train,X_test,y_test):
     #np.random.randint(50,high=500)
-    param_dist = {'n_estimators': [20,50,100,200,300],
-            'max_depth': [10,30,50,60,100]}
+    param_dist = {'n_estimators': [20,50,100,200,300,400,500],
+            'max_depth': [10,30,50,60,100,150], 'min_samples_split':[3, 5, 7,9]}
 
     # Create a random forest classifier
     rf = RandomForestClassifier()
@@ -96,7 +96,7 @@ def bestclassifier(X_train, y_train,X_test,y_test,gridsearch=True):
     #clf3=XGBClassifier(random_state=42,gamma=0,scale_pos_weight=1,validation_fraction=0.1)
     
     #Algorithm settings
-    settings1={'classifier__n_estimators':[50,100,150,200],'classifier__max_depth':[3,4], 'classifier__min_samples_split':[3, 5, 7],'classifier':[clf1]}
+    settings1={'classifier__n_estimators':[50,200,350,500],'classifier__max_depth':[3,4,5,6], 'classifier__min_samples_split':[3, 5, 7],'classifier':[clf1]}
     settings2 = {'classifier__n_estimators':[40,50,70,80,100], 'classifier__max_depth':[3,4], 'classifier__min_samples_split':[3, 5, 7],'classifier':[clf2]}
     #settings3 = {'classifier__max_depth':[2,3,5], 'classifier__min_child_weight':[2,3,5],'classifier__n_estimators':[50,100,150],\
      #   'classifier__learning_rate':[0.5,0.2,0.1,0.05],'classifier':[clf3]}
