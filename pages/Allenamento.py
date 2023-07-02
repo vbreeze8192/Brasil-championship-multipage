@@ -84,6 +84,11 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
         st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
         cm = confusion_matrix(train_df[output], alg.predict(train_df[input]))
         st.write(cm)
+        st.download_button(
+            "Download Model",
+            data=pickle.dumps(alg),
+            file_name='{}_model_v02',
+        )
     
 
  
