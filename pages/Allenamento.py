@@ -87,7 +87,7 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
         st.download_button(
             "Download Model",
             data=pickle.dumps(alg),
-            file_name='{}_model_v02',
+            file_name='{}_model_v02'.format(output),
         )
     
 
