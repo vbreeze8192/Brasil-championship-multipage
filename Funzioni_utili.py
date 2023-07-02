@@ -38,10 +38,11 @@ def starting():
     'AVG_Dxd_N_CH',\
     'QTY_ND_3Y_S',\
     'QTY_ND_N_S',\
-    'HOUR',\
-    'HoA',\
     'MEAN_S',\
-    'STD_S']
+    'STD_S',\
+    'HOUR',\
+    'HoA']
+
     return(input,input_lower)
      
 
