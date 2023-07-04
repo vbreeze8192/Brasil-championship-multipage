@@ -457,7 +457,7 @@ def prediction(uploaded_model,output_choice,final_df,input='na',input_lower='na'
         ##Modello: predizioni per output
         #nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}'.format(output_choice)))
         alg=pickle.load(uploaded_model)
-        st.write(dict)
+        #st.write(dict)
         #alg=dict['Algorithm']
         #alg=uploaded_model['Algorithm']
 
