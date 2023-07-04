@@ -51,10 +51,14 @@ anni=[*range(start_year,end_year+1)] #esclude 'l'ultimo anno
 
 #col_raw=['Giornata','Date','Time','HomeTeam','AwayTeam','FTHG','FTAG','FTR']
 col_raw=['Country','League','Season','Date','Time','Home','Away','HG','AG','Res']
+st.write("Carica il modello e seleziona l'orizzonte previsionale")
 
 output_select = st.radio(
     "Su quanti giorni vuoi prevedere la cumulata dei pareggi?",
-    ('1','3','4'))
+    ('1','2','3','4'))
+
+
+uploaded_model = st.file_uploader("Carica modello")
 
 output_choice = 'D_in_{}iter'.format(output_select)
 #'D_in_1iter', 'D_in_2iter', 'D_in_3iter',
@@ -62,11 +66,11 @@ st.write('Il modello prevede la probabilità che una squadra faccia almeno un pa
 outputs=['D_in_4iter','D_in_2iter','D_in_1iter']
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
-if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
+if st.button('Prevedi for Braaasil',disabled=(not uploaded_file and not uploaded_model), type='primary'):
     st.write(':leaves:')
     
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
-    [int_df,alg_w,alg_lp]=prediction(output_choice,int_df)
+    [int_df,alg_w,alg_lp]=prediction(uploaded_model,output_choice,int_df)
     squadre=list(int_df.groupby(['SQUADRA']).mean().index)
     val_df=int_df.copy()
     for squadra in squadre:

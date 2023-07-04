@@ -54,7 +54,7 @@ col_raw=['Country','League','Season','Date','Time','Home','Away','HG','AG','Res'
 
 #'D_in_1iter', 'D_in_2iter', 'D_in_3iter',
 st.write('Il modello prevede la probabilità che una squadra faccia almeno un pareggio nelle prossime 1, 2, 3 e 4 giornate.')
-outputs=['D_in_4iter','D_in_3iter','D_in_2iter','D_in_1iter']
+
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
 if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
