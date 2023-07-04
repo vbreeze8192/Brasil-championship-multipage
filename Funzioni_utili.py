@@ -456,8 +456,10 @@ def prediction(uploaded_model,output_choice,final_df,input='na',input_lower='na'
 
         ##Modello: predizioni per output
         #nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}'.format(output_choice)))
-        dict=pickle.load(open(uploaded_model, 'rb'))
-        alg=dict['Algorithm']
+        #dict=pickle.load(open(uploaded_model, 'rb'))
+        #alg=dict['Algorithm']
+        alg=uploaded_model['Algorithm']
+
         final_df['{}_pred'.format(output_choice)]=alg.predict(final_df[input])
         final_df['{}_probA'.format(output_choice)]=alg.predict_proba(final_df[input])[:,0]
         final_df['{}_probB'.format(output_choice)]=alg.predict_proba(final_df[input])[:,1]
