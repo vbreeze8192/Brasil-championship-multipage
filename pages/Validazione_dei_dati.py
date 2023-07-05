@@ -63,7 +63,7 @@ uploaded_model = st.file_uploader("Carica modello. Limite: 200MB")
 output_choice = 'D_in_{}iter'.format(output_select)
 #'D_in_1iter', 'D_in_2iter', 'D_in_3iter',
 st.write('Il modello prevede la probabilità che una squadra faccia almeno un pareggio nelle prossime {} giornate.'.format(output_select))
-outputs=['D_in_4iter','D_in_2iter','D_in_1iter']
+outputs=['D_in_4iter','D_in_3iter','D_in_2iter','D_in_1iter']
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
 if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_model), type='primary'):
@@ -76,6 +76,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     for squadra in squadre:
         #Pari nelle prossime N partite da D=now a D=now+N
         temp=int_df[int_df['SQUADRA']==squadra]
+        temp=temp.reset_index()
         (temp,outputs)=d_in_future(temp,4)
         val_df=pd.concat([val_df,temp])
     st.write('Ecco i dati completi')
