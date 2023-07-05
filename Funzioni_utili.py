@@ -435,14 +435,27 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
                 int_df=pd.concat([int_df,line_team])
 
-            int_df=int_df.fillna(0)
+            int_df=int_df.dropna()
             final_df=int_df[int_df[col_day]==day] #final df contiene la sola riga del giorno x
             final_df=final_df.fillna(0)
             #per training il df è int_df
-        st.write('Ecco il dataset su cui faccio previsioni. Ho riempito i valori nulli con 0.')
-        download_excel(final_df,'Pre-training_dataset_Day{}'.format(day))
-        st.write("Ecco il dataset su cui faccio l'allenamento. Ho riempito i valori nulli con 0.")
-        download_excel(int_df,'Pre-training_dataset_whole')
+        if what=='pred':
+            st.write('Ecco il dataset su cui faccio previsioni. Ho cancellato i valori nulli.')
+            download_excel(final_df,'Pre-training_dataset_Day{}'.format(day))
+        elif what=='val':
+            st.write("Ecco il dataset su cui faccio la validazione. Ho cancellato i valori nulli.")
+            download_excel(int_df,'Pre-training_dataset_whole')
+        elif what=='train':
+
+
+            st.write("Ecco il dataset su cui faccio l'allenamento. Ho riempito i valori nulli con 0.")
+            download_excel(int_df,'Pre-training_dataset_whole')
+        else:
+            st.write('Task non chiaro.')
+ 
+            #in che giorno nella riga
+
+
 
         return(raw,final_df,int_df)
     
