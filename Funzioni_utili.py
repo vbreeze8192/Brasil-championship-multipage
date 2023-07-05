@@ -496,7 +496,7 @@ def talk(day_iter,output_choice,final_df):
         st.title('Risultati per la giornata {}'.format(day_iter))
         st.subheader("""Prima versione""")
         st.write('Questi risultati sono ottenuti con modelli allenati su questi input:')
-        st.write(input)
+
         final_df=final_df.sort_values('{}_probA'.format(output_choice))
         
         st.write('Valutando {}, nella giornata {} dovresti investire su: :moneybag:'.format(output_choice,day_iter))

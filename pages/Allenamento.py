@@ -41,7 +41,11 @@ end_year=st.text_input("Anno finale del dataset completo",2022)
 end_year=int(end_year)
 anno_val=st.text_input("Anno su cui validare",2022)
 anno_val=int(anno_val)
+output_select = st.radio(
+    "Su quanti giorni vuoi prevedere la cumulata dei pareggi?",
+    ('1','2','3','4'))
 
+output = 'D_in_{}iter'.format(output_select)
 #Campionato brasile. Un anno per ogni foglio
 #Alleno su tutti gli anni, passando tutti gli anni sia per la media che per la predizione. 
 
@@ -70,25 +74,26 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
         (temp,outputs)=d_in_future(temp,4)
         train_df=pd.concat([train_df,temp])
 
-    for output in outputs:
-        st.write('Sto calcolando questo: {}'.format(output))
-        [input,input_lower]=starting()
-        st.write("\n:robot_face: E mo' m'annleno. :robot_face:")
-        train_df=train_df.fillna(0)
-        download_excel(train_df,name_exc='Training')
-        [alg,dicts,nome_modello]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello='{}_model_v02'.format(output))
-        #final_df['{}_prob'.format(output)]=alg.predict_proba(final_df[input])
-        
-        
-        st.write('Confusion matrix su tutto il dataset')
-        st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
-        cm = confusion_matrix(train_df[output], alg.predict(train_df[input]))
-        st.write(cm)
-        st.download_button(
-            "Download Model",
-            data=pickle.dumps(alg),
-            file_name='{}_model_v02'.format(output),
-        )
+    #for output in outputs:
+
+    st.write('Sto calcolando questo: {}'.format(output))
+    [input,input_lower]=starting()
+    st.write("\n:robot_face: E mo' m'alleno. :robot_face:")
+    train_df=train_df.fillna(0)
+    download_excel(train_df,name_exc='Training')
+    [alg,dicts,nome_modello]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello='{}_model_v02'.format(output))
+    #final_df['{}_prob'.format(output)]=alg.predict_proba(final_df[input])
+    
+    
+    st.write('Confusion matrix su tutto il dataset')
+    st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
+    cm = confusion_matrix(train_df[output], alg.predict(train_df[input]))
+    st.write(cm)
+    st.download_button(
+        "Download Model",
+        data=pickle.dumps(alg),
+        file_name='{}_model_v02'.format(output),
+    )
     
 
  
