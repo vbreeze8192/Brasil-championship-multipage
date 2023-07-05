@@ -46,7 +46,10 @@ col_raw=['Country','League','Season','Date','Time','Home','Away','HG','AG','Res'
 
 output_select = st.radio(
     "Su quanti giorni vuoi prevedere la cumulata dei pareggi?",
-    ('1','3','4'))
+    ('1','2','3','4'))
+
+
+uploaded_model = st.file_uploader("Carica modello. Limite: 200MB")
 
 output_choice = 'D_in_{}iter'.format(output_select)
 #'D_in_1iter', 'D_in_2iter', 'D_in_3iter',
@@ -57,7 +60,7 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write(':leaves:')
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day)
-    [final_df,alg_w,alg_lp]=prediction(output_choice, final_df)
+    [final_df,alg_w,alg_lp]=prediction(uploaded_model,output_choice, final_df)
     final_df=talk(day,output_choice,final_df)
 
     st.write('Ecco i dati completi per la giornata {}.'.format(day))
