@@ -72,7 +72,8 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
     [int_df,alg_w,alg_lp]=prediction(uploaded_model,output_choice,int_df)
     squadre=list(int_df.groupby(['SQUADRA']).mean().index)
-    val_df=int_df.copy()
+    #val_df=int_df.copy()
+    val_df=pd.DataFrame()
     for squadra in squadre:
         #Pari nelle prossime N partite da D=now a D=now+N
         temp=int_df[int_df['SQUADRA']==squadra]
