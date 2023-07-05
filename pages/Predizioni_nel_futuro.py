@@ -60,7 +60,7 @@ uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 if st.button('Prevedi for Braaasil',disabled=not (uploaded_file and uploaded_model), type='primary'):
     st.write(':leaves:')
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day)
-    [final_df,alg_w,alg_lp]=prediction(uploaded_model,output_choice, final_df)
+    [final_df,alg_w]=prediction(uploaded_model,output_choice, final_df)
     final_df=talk(day,output_choice,final_df)
 
     st.write('Ecco i dati completi per la giornata {}.'.format(day))

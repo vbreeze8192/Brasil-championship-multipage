@@ -70,7 +70,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.write(':leaves:')
     
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
-    [int_df,alg_w,alg_lp]=prediction(uploaded_model,output_choice,int_df)
+    [int_df,alg_w]=prediction(uploaded_model,output_choice,int_df)
     squadre=list(int_df.groupby(['SQUADRA']).mean().index)
     #val_df=int_df.copy()
     val_df=pd.DataFrame()
