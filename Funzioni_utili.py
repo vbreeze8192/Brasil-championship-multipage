@@ -480,7 +480,7 @@ def prediction(uploaded_model,output_choice,final_df,input='na',input_lower='na'
         final_df=final_df.dropna()
         alg_w=alg
          ##Modello: predizioni per output, con meno input
-        
+        '''
         nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}_lower_input'.format(output_choice)))
         dict=pickle.load(open(nome_modello, 'rb'))
         alg=dict['Algorithm']
@@ -489,8 +489,8 @@ def prediction(uploaded_model,output_choice,final_df,input='na',input_lower='na'
         final_df['{}_lp_probB'.format(output_choice)]=alg.predict_proba(final_df[input_lower])[:,1]
         final_df=final_df.dropna()
         alg_lp=alg
-
-        return(final_df,alg_w,alg_lp)
+        '''
+        return(final_df,alg_w)
     
 def talk(day_iter,output_choice,final_df):
         st.title('Risultati per la giornata {}'.format(day_iter))
@@ -522,7 +522,7 @@ def talk(day_iter,output_choice,final_df):
 
 
         
-
+        '''
         st.subheader("""Seconda versione""")
         st.write('Questi risultati sono ottenuti con modelli allenati su questi input:')
         st.write(input_lower)
@@ -549,7 +549,7 @@ def talk(day_iter,output_choice,final_df):
             st.write('Mah, ste probabilità so di nuovo tutte uguali a 1. Grazie al c:sparkles:...')
         else:
             st.write('Qui almeno abbiamo probabilità diverse')
-
+        '''
         
         df=pd.concat([df,final_df])
         

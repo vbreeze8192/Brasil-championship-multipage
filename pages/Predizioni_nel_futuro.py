@@ -57,7 +57,7 @@ st.write('Il modello prevede la probabilità che una squadra faccia almeno un pa
 outputs=['D_in_4iter','D_in_2iter','D_in_1iter']
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
-if st.button('Prevedi for Braaasil',disabled=not uploaded_file, type='primary'):
+if st.button('Prevedi for Braaasil',disabled=not (uploaded_file and uploaded_model), type='primary'):
     st.write(':leaves:')
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,day=day)
     [final_df,alg_w,alg_lp]=prediction(uploaded_model,output_choice, final_df)
