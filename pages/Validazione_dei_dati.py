@@ -88,12 +88,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     [input,input_lower]=starting()
     cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
     st.write(cm)
-    '''
-    st.write('Confusion matrix per secondo algoritmo')
-    cm = confusion_matrix(val_df[output_choice], alg_lp.predict(val_df[input_lower]))
 
-    st.write(cm)
-    '''
 
 
   

@@ -550,9 +550,6 @@ def talk(day_iter,output_choice,final_df):
         else:
             st.write('Qui almeno abbiamo probabilità diverse')
         '''
-        
-        df=pd.concat([df,final_df])
-        
-        return(df)
+
 
 
