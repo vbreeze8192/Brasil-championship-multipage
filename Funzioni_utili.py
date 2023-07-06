@@ -315,7 +315,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     #st.write('Valori non validi: {}'.format(raw.isna().sum()))
     raw=raw.fillna(0)
 
-    for col in [col_day, 'N_GOAL', 'D', 'HoA', year_col]:
+    for col in [col_day, 'N_GOAL','N_GOAL_SF', 'D', 'HoA', year_col]:
         raw[col]=raw[col].astype(int)
 
     st.write(':calendar: Divido il dataset completo in anni prima e anno corrente.')
@@ -351,9 +351,6 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     raw=raw[raw[year_col]==anno_val]
     st.write('Righe per questo anno: {}'.format(raw.shape[0]))
     raw=raw.sort_values(col_day)
-    start_day=raw[col_day].iloc[0]
-    giornate=raw.groupby(col_day).mean().index #tutte le giornate per fare predizione. 
-
 
     
     df=pd.DataFrame()
