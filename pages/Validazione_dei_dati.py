@@ -95,6 +95,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     # explain the model's predictions using SHAP
     explainer = shap.TreeExplainer(alg_w)
     shap_values = explainer.shap_values(val_df[input])
+    st.write(shap_values)
 
     # visualize the first prediction's explanation 
     shap.initjs()
