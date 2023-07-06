@@ -297,7 +297,6 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     st.write(':floppy_disk: Ho fatto il dataset completo. Ora estraggo i dati utili: squadre, pareggi, altre amenità.')
     #estrai lista delle squadre
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
-    sfidanti=list(raw.groupby(['SFIDANTE']).mean().index)
 
     raw['HOUR']=0
     tl=st.empty()
