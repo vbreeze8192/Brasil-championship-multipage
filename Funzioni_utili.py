@@ -40,6 +40,8 @@ def starting():
     'QTY_ND_N_S',\
     'MEAN_S',\
     'STD_S',\
+    'MEAN_S_SFID',\
+    'STD_S_SFID',\
     'HOUR',\
     'HoA']
 
@@ -281,12 +283,12 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     #print(original)
 
     #dividi le squadre: crea 2 dataset temporanei che contengono solo le singole squadre home e away e relativo risultato
-    temp_a=original[[col_day,year_col,col_date,col_time,col_a,col_ag,'D']]
-    temp_h=original[[col_day,year_col,col_date,col_time,col_h,col_hg,'D']]
+    temp_a=original[[col_day,year_col,col_date,col_time,col_a,col_h,col_ag,'D']]
+    temp_h=original[[col_day,year_col,col_date,col_time,col_h,col_a,col_hg,'D']]
 
     #cambia nome delle colonne 
-    temp_a=temp_a.rename(columns={col_a: "SQUADRA", col_ag: "N_GOAL"})
-    temp_h=temp_h.rename(columns={col_h: "SQUADRA", col_hg: "N_GOAL"})
+    temp_a=temp_a.rename(columns={col_a: "SQUADRA", col_ag: "N_GOAL",col_hg: "N_GOAL_SF"})
+    temp_h=temp_h.rename(columns={col_h: "SQUADRA", col_hg: "N_GOAL", col_ag: "N_GOAL_SF"})
     temp_a['HoA']='0'
     temp_h['HoA']='1'
 
@@ -295,6 +297,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     st.write(':floppy_disk: Ho fatto il dataset completo. Ora estraggo i dati utili: squadre, pareggi, altre amenità.')
     #estrai lista delle squadre
     squadre=list(raw.groupby(['SQUADRA']).mean().index)
+    sfidanti=list(raw.groupby(['SFIDANTE']).mean().index)
 
     raw['HOUR']=0
     tl=st.empty()
@@ -431,7 +434,8 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 #media e dev std di goal per la squadra
                 line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
                 line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
-                
+                line_team[input[10]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL_SF"].mean()
+                line_team[input[11]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL_SF"].std()               
 
                 int_df=pd.concat([int_df,line_team])
 

@@ -94,6 +94,10 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
         data=pickle.dumps(alg),
         file_name='{}_model_v02'.format(output),
     )
+
+
+    ##TODO
+    #Accoppiare le squadre e confrontare le medie e dev std. 
     
 
  
