@@ -100,6 +100,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     # visualize the first prediction's explanation 
     shap.initjs()
     shap.force_plot(explainer.expected_value, shap_values, val_df[input])
+    st.pyplot()
 
 
   
