@@ -18,7 +18,7 @@ from sklearn.ensemble import ExtraTreesClassifier
 
 from sklearn.pipeline import Pipeline
 #from sklearn.metrics import ConfusionMatrixDisplay
-from sklearn.metrics import accuracy_score, confusion_matrix,plot_confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix
 
 from sklearn.metrics import r2_score
 
