@@ -9,6 +9,7 @@ import streamlit as st
 from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, confusion_matrix
 import shap
 from explainerdashboard import ClassifierExplainer,ExplainerDashboard
+import streamlit.components.v1 as components
 
 #General
 from os import walk
@@ -97,9 +98,15 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     ##explainer = shap.TreeExplainer(alg_w)
     ##shap_values = explainer.shap_values(val_df[input])
     ##st.write(shap_values)
-
+    st.title("XAI")
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
-    ExplainerDashboard(explainer).run()
+    hub=ExplainerDashboard(explainer).run()
+
+    
+    HtmlFile = open(hub.to_html('hub.html'), 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    print(source_code)
+    components.html(source_code)
     # visualize the first prediction's explanation run(mode='external')
     #st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
 
