@@ -102,7 +102,6 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
         shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
         components.html(shap_html, height=height)
     # visualize the first prediction's explanation 
-    shap.initjs()
     st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
 
 
