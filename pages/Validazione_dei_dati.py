@@ -97,10 +97,13 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     shap_values = explainer.shap_values(val_df[input])
     st.write(shap_values)
 
+    import streamlit.components.v1 as components
+    def st_shap(plot, height=None):
+        shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
+        components.html(shap_html, height=height)
     # visualize the first prediction's explanation 
     shap.initjs()
-    test=shap.force_plot(explainer.expected_value, shap_values, val_df[input])
-    st.write(test)
+    st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
 
 
   
