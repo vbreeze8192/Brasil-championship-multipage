@@ -8,7 +8,7 @@ from datetime import datetime, date,timedelta
 import streamlit as st
 from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, confusion_matrix
 import shap
-from explainerdashboard import ClassifierExplainer,ExplainerDashboard
+from explainerdashboard import ClassifierExplainer,ExplainerDashboard, ExplainerHub
 import streamlit.components.v1 as components
 
 #General
@@ -100,12 +100,14 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     ##st.write(shap_values)
     st.title("XAI")
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
-    hub=ExplainerDashboard(explainer).run()
+    db=ExplainerDashboard(explainer).run()
+    hub = ExplainerHub([db], title="XAI",
+            description="Dashboard di explainable AI")
 
     
     HtmlFile = open(hub.to_html('hub.html'), 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
-    print(source_code)
+    st.write(source_code)
     components.html(source_code)
     # visualize the first prediction's explanation run(mode='external')
     #st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
