@@ -101,6 +101,13 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.title("XAI")
     
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
+    from psutil import process_iter
+    from signal import SIGTERM # or SIGKILL
+
+    for proc in process_iter():
+        for conns in proc.connections(kind='inet'):
+            if conns.laddr.port == 8050:
+                proc.send_signal(SIGTERM) # or SIGKILL
     db=ExplainerDashboard(explainer).run()
     #hub = ExplainerHub([db], title="XAI",description="Dashboard di explainable AI")
 
