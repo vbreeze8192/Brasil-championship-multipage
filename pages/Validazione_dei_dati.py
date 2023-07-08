@@ -98,6 +98,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     ##explainer = shap.TreeExplainer(alg_w)
     ##shap_values = explainer.shap_values(val_df[input])
     ##st.write(shap_values)
+    '''
     st.title("XAI")
     
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
@@ -117,6 +118,6 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     
 
     components.html(db.as_html(), height=800)
-
+    '''
 
   
