@@ -104,11 +104,10 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     hub = ExplainerHub([db], title="XAI",
             description="Dashboard di explainable AI")
 
-    st.write(hub)
-    #HtmlFile = open(hub.to_html('hub.html'), 'r', encoding='utf-8')
-    #source_code = HtmlFile.read() 
-    #st.write(source_code)
-    #components.html(source_code)
+    HtmlFile = open(hub.to_html('hub.html'), 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    st.write(source_code)
+    components.html(source_code)
     # visualize the first prediction's explanation run(mode='external')
     #st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
 
