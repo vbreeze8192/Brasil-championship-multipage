@@ -106,8 +106,11 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
 
     HtmlFile = open(hub.to_html('hub.html'), 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
-    st.write(source_code)
-    components.html(source_code)
+    st.download_button(
+        "Download xai",
+        data=pickle.dumps(source_code),
+        file_name='htmlfile',
+    )
     # visualize the first prediction's explanation run(mode='external')
     #st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
 
