@@ -101,10 +101,9 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.title("XAI")
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
     db=ExplainerDashboard(explainer).run()
-    hub = ExplainerHub([db], title="XAI",
-            description="Dashboard di explainable AI")
+    #hub = ExplainerHub([db], title="XAI",description="Dashboard di explainable AI")
 
-    components.iframe(hub)
+    components.iframe(db)
     # visualize the first prediction's explanation run(mode='external')
     #st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
 
