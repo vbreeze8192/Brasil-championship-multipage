@@ -23,13 +23,35 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.metrics import r2_score
 
 
-def starting():
+def starting(print_input='NO'):
+    
+    dict_input={'AVG_D_3Y_CH':'Media di pareggi per championship, calcolata sulle stagioni precedenti',\
+    'AVG_D_N_CH':'Media di pareggi per championship, calcolata sulla stagione attuale',\
+    'AVG_ND_3Y_S':'Media di non-pareggi per squadra, calcolata sulle stagioni precedenti',\
+    'AVG_ND_N_S':'Media di non-pareggi per squadra, calcolata sulla stagione attuale',\
+    'AVG_Dxd_3Y_CH':'Media di pareggi per giornata per championship, calcolata sulle stagioni passate',\
+    'AVG_Dxd_N_CH':'Media di pareggi per giornata per championship, calcolata sulla stagione presente',\
+    'QTY_ND_3Y_S':'Media del periodo massimo per stagione di giornate consecutive senza pareggi per squadra, calcolata sulle stagioni precedenti',\
+    'QTY_ND_N_S':'Quantità di giornate consecutive senza pareggi per squadra sulla stagione attuale',\
+    'MEAN_S':'Media dei goal per partita nella stagione attuale della squadra di riferimento',\
+    'STD_S':'Deviazione standard dei goal per partita nella stagione attuale della squadra di riferimento',\
+    'MEAN_S_SFID':'Media dei goal per partita nella stagione attuale della squadra sfidante',\
+    'STD_S_SFID':'Deviazione standard dei goal per partita nella stagione attuale della squadra sfidante',\
+    'HOUR':'Ora della partita',\
+    'HoA':'Indicazione su Home o Away (0: Away, 1: Home)'}
+
+    if print_input!='NO':
+         for item in dict_input:
+              st.write('{}: {}'.format(item,dict_input[item]))
+                       
+
     input_lower=['AVG_ND_3Y_S',\
     'AVG_ND_N_S',\
     'QTY_ND_3Y_S',\
     'QTY_ND_N_S',\
     'HOUR',\
     'HoA']
+    '''
     input=['AVG_D_3Y_CH',\
     'AVG_D_N_CH',\
     'AVG_ND_3Y_S',\
@@ -44,10 +66,13 @@ def starting():
     'STD_S_SFID',\
     'HOUR',\
     'HoA']
+    '''
+    input=[]
+    for item in dict_input:
+         input=input+[item]
 
     return(input,input_lower)
      
-
 #Funzioni per allenare il modello 
 def rfc(X_train, y_train,X_test,y_test):
     #np.random.randint(50,high=500)
