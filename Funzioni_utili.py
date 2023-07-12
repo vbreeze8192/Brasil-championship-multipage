@@ -261,12 +261,9 @@ def file_selector(folder_path='.'):
 
 
 
-def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',inputs='na',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res'):
-    if inputs=='na':
-        [input,input_lower]=starting()
-        st.write(input)
-    else:
-        input=inputs
+def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',col_date='Date',col_time='Time',col_a='Away',col_ag='AG',col_h='Home',col_hg='HG',col_res='Res'):
+    [input,input_lower]=starting()
+
     original=pd.DataFrame()
     for anno in anni+[anno_val]:
         anno=str(anno)
@@ -439,15 +436,15 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             final_df=final_df.fillna(0)
             #per training il df è int_df
         if what=='pred':
-            st.write('Ecco il dataset su cui faccio previsioni. Ho cancellato i valori nulli.')
+            st.write('Ecco il dataset su cui faccio previsioni. Ho cancellato i valori nulli. Selezionerò solo le colonne che hai usato nel training.')
             download_excel(final_df,'Pre-training_dataset_Day{}'.format(day))
         elif what=='val':
-            st.write("Ecco il dataset su cui faccio la validazione. Ho cancellato i valori nulli.")
+            st.write("Ecco il dataset su cui faccio la validazione. Ho cancellato i valori nulli. Selezionerò solo le colonne che hai usato nel training.")
             download_excel(int_df,'Pre-training_dataset_whole')
         elif what=='train':
 
 
-            st.write("Ecco il dataset su cui faccio l'allenamento. Ho riempito i valori nulli con 0.")
+            st.write("Ecco il dataset su cui faccio l'allenamento. Ho riempito i valori nulli con 0. Selezionerò solo le colonne che hai scelto.")
             download_excel(int_df,'Pre-training_dataset_whole')
         else:
             st.write('Task non chiaro.')
@@ -458,10 +455,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
         return(raw,final_df,int_df)
     
-def prediction(uploaded_model,output_choice,final_df,input='na',input_lower='na'):
-        if input=='na':
-            [input,b]=starting()
-
+def prediction(uploaded_model,output_choice,final_df,input_lower='na'):
         if input_lower=='na':
             [a,input_lower]=starting()
         st.write("\n:robot_face: E mo' predico. :robot_face:")
