@@ -56,16 +56,12 @@ anni=[*range(start_year,end_year+1)] #esclude 'l'ultimo anno
 col_raw=['Country','League','Season','Date','Time','Home','Away','HG','AG','Res']
 st.write("Carica il modello e seleziona l'orizzonte previsionale")
 
-output_select = st.radio(
-    "Su quanti giorni vuoi prevedere la cumulata dei pareggi?",
-    ('1','2','3','4'))
 
 
 uploaded_model = st.file_uploader("Carica modello. Limite: 200MB")
 
 
 #'D_in_1iter', 'D_in_2iter', 'D_in_3iter',
-st.write('Il modello prevede la probabilità che una squadra faccia almeno un pareggio nelle prossime {} giornate.'.format(output_select))
 outputs=['D_in_4iter','D_in_3iter','D_in_2iter','D_in_1iter']
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
@@ -73,8 +69,10 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.write(':leaves:')
     save=pickle.load(uploaded_model)
     output_select=save['Predict_future']
+    st.write('Il modello prevede la probabilità che una squadra faccia almeno un pareggio nelle prossime {} giornate.'.format(output_select))
+
     output_choice=save['Output']
-    
+
     [raw,final_df,int_df]=doyourstupidthings(uploaded_file,year_col,col_day,anni,anno_val,what='val')
     [int_df,alg_w]=prediction(uploaded_model,output_choice,int_df)
     squadre=list(int_df.groupby(['SQUADRA']).mean().index)
