@@ -95,6 +95,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
 
     probtarget='{}_probA'.format(output_choice)
     limite_prob=st.text_input("Probabilità oltre cui considerare pareggio",0.5)
+    limite_prob=int(limite_prob)
     val_df[val_df[probtarget]>limite_prob][output_choice]=1
     new_cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
     st.write(new_cm)
