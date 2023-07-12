@@ -44,6 +44,7 @@ end_year=st.text_input("Anno finale del dataset completo",2022)
 end_year=int(end_year)
 anno_val=st.text_input("Anno su cui validare",2022)
 anno_val=int(anno_val)
+limite_prob=st.text_input("Probabilità oltre cui considerare pareggio",0.4)
 
 #Campionato brasile. Un anno per ogni foglio
 #Alleno su tutti gli anni, passando tutti gli anni sia per la media che per la predizione. 
@@ -88,18 +89,19 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     download_excel(val_df,name_exc='Prediction_Complete_{}'.format(anno_val))
     val_df=val_df.fillna(-1)
     st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
-    st.write('Confusion matrix per primo algoritmo')
+    st.write('Confusion matrix')
     input=save['Input']
     cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
     st.write(cm)
 
     probtarget='{}_probA'.format(output_choice)
-    limite_prob=st.text_input("Probabilità oltre cui considerare pareggio",0.5)
-    if st.button('Cambia limite'):
-        limite_prob=float(limite_prob)
-        val_df[val_df[probtarget]>limite_prob][output_choice]=1
-        new_cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
-        st.write(new_cm)
+    
+
+    limite_prob=float(limite_prob)
+    val_df[val_df[probtarget]>limite_prob][output_choice]=1
+    st.write('Confusion matrix con nuova probabilità')
+    new_cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
+    st.write(new_cm)
 
 
   
