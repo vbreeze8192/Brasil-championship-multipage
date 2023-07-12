@@ -71,7 +71,7 @@ def rfc(X_train, y_train,X_test,y_test):
     best_rf = rand_search.best_estimator_
 
     # Print the best hyperparameters
-    print('Best hyperparameters:',  rand_search.best_params_)
+    st.write('Best hyperparameters:',  rand_search.best_params_)
     # Generate predictions with the best model
     y_pred = best_rf.predict(X_test)
     #confMatrix(y_test, y_pred)
@@ -181,8 +181,7 @@ def save_pickle(alg,inlist,outlist,score,nome_modello='NA'):
     pickle.dump(save['Algorithm'], open('{}_concrete_algorithm'.format(nome_modello), 'wb'))
     print('Saved')
     return(save,nome_modello)
-
-
+     
 #funzioni per estrarre le info da utilizzare in train e test?
 #indicatori da champion 3 yr prec: da calcolare sul raw o sul primo livello di tabella? Rischi oche si raddoppi? non dovrebbe sulle medie
 def team_metrics(df,squadre,col_squadre='SQUADRA',col_d='D'):
@@ -469,7 +468,14 @@ def prediction(uploaded_model,output_choice,final_df,input='na',input_lower='na'
 
         ##Modello: predizioni per output
         #nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}'.format(output_choice)))
-        alg=pickle.load(uploaded_model)
+        save=pickle.load(uploaded_model)
+
+        alg=save['Algorithm']
+        input=save['Input']
+        output_choice=save['Output']
+
+        output_select=save['Predict_future']
+        
         #st.write(dict)
         #alg=dict['Algorithm']
         #alg=uploaded_model['Algorithm']

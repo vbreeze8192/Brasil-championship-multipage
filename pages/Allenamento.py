@@ -44,7 +44,14 @@ anno_val=int(anno_val)
 output_select = st.radio(
     "Su quanti giorni vuoi prevedere la cumulata dei pareggi?",
     ('1','2','3','4'))
+nome_modello = st.text_input("Nome della colonna del modello", 'Modello_{}_giorni'.format(output_select))
+[input_total,input_lower]=starting()
+input = st.multiselect(
+    'What are your favorite colors',
+    input_total,
+    input_total)
 
+st.write('Hai selezionato:', input)
 output = 'D_in_{}iter'.format(output_select)
 #Campionato brasile. Un anno per ogni foglio
 #Alleno su tutti gli anni, passando tutti gli anni sia per la media che per la predizione. 
@@ -77,11 +84,11 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
     #for output in outputs:
 
     st.write('Sto calcolando questo: {}'.format(output))
-    [input,input_lower]=starting()
+    
     st.write("\n:robot_face: E mo' m'alleno. :robot_face:")
     train_df=train_df.fillna(0)
     download_excel(train_df,name_exc='Training')
-    [alg,dicts,nome_modello]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello='{}_model_v02'.format(output))
+    [alg,dicts,nome_modello]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello=nome_modello)
     #final_df['{}_prob'.format(output)]=alg.predict_proba(final_df[input])
     
     
@@ -89,10 +96,19 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
     cm = confusion_matrix(train_df[output], alg.predict(train_df[input]))
     st.write(cm)
+
+    save={}
+    save['Algorithm']=alg
+    save['Input']=input
+    save['Output']=output
+    save['Score_test']=alg.score(alg.predict(train_df[input]), train_df[output])
+    save['Predict_future']=output_select
+
+
     st.download_button(
         "Download Model",
-        data=pickle.dumps(alg),
-        file_name='{}_model_v02'.format(output),
+        data=pickle.dumps(save),
+        file_name=nome_modello,
     )
 
 
