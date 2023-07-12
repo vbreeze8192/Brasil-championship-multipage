@@ -93,32 +93,11 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
     st.write(cm)
 
+    probtarget='{}_probA'.format(output_choice)
+    limite_prob=st.text_input("Probabilità oltre cui considerare pareggio",0.5)
+    val_df[val_df[probtarget]>limite_prob][output_choice]=1
+    new_cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
+    st.write(new_cm)
 
-
-    # explain the model's predictions using SHAP
-    ##explainer = shap.TreeExplainer(alg_w)
-    ##shap_values = explainer.shap_values(val_df[input])
-    ##st.write(shap_values)
-    '''
-    st.title("XAI")
-    
-    explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
-    from psutil import process_iter
-    from signal import SIGTERM # or SIGKILL
-
-    for proc in process_iter():
-        for conns in proc.connections(kind='inet'):
-            if conns.laddr.port == 8050:
-                proc.send_signal(SIGTERM) # or SIGKILL
-    db=ExplainerDashboard(explainer).run()
-    #hub = ExplainerHub([db], title="XAI",description="Dashboard di explainable AI")
-
-    #components.iframe(db)
-    # visualize the first prediction's explanation run(mode='external')
-    #st_shap(shap.force_plot(explainer.expected_value, shap_values, val_df[input]))
-    
-
-    components.html(db.as_html(), height=800)
-    '''
 
   
