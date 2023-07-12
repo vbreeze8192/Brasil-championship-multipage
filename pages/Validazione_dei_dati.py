@@ -91,16 +91,16 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
     st.write('Confusion matrix')
     input=save['Input']
-    cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
+    cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)])
     st.write(cm)
 
     probtarget='{}_probA'.format(output_choice)
     
 
     limite_prob=float(limite_prob)
-    val_df[val_df[probtarget]>limite_prob][output_choice]=1
+    val_df[val_df[probtarget]>limite_prob]['{}_pred'.format(output_choice)]=1
     st.write('Confusion matrix con nuova probabilità')
-    new_cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
+    new_cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)]))
     st.write(new_cm)
 
 
