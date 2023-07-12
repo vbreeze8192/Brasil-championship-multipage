@@ -100,7 +100,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     limite_prob=float(limite_prob)
     val_df[val_df[probtarget]>limite_prob]['{}_pred'.format(output_choice)]=1
     st.write('Confusion matrix con nuova probabilità')
-    new_cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)]))
+    new_cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)])
     st.write(new_cm)
 
 
