@@ -42,7 +42,7 @@ def starting(print_input='NO'):
 
     if print_input!='NO':
          for item in dict_input:
-              st.write('{}: {}'.format(item,dict_input[item]))
+              st.write(':red[{}:] {}'.format(item,dict_input[item]))
                        
 
     input_lower=['AVG_ND_3Y_S',\
