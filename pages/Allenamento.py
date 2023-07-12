@@ -88,7 +88,7 @@ if st.button('Allena for Braaasil',disabled=not uploaded_file, type='primary'):
     st.write("\n:robot_face: E mo' m'alleno. :robot_face:")
     train_df=train_df.fillna(0)
     download_excel(train_df,name_exc='Training')
-    [alg,dicts,nome_modello]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello=nome_modello)
+    [alg,dicts,nome_modello_]=train(train_df,input,output,task='rfc',testsize=0.3,nome_modello=nome_modello)
     #final_df['{}_prob'.format(output)]=alg.predict_proba(final_df[input])
     
     
