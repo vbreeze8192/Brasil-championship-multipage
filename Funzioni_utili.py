@@ -481,15 +481,14 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
 
         return(raw,final_df,int_df)
     
-def prediction(uploaded_model,output_choice,final_df,input_lower='na'):
+def prediction(save,output_choice,final_df,input_lower='na'):
         if input_lower=='na':
             [a,input_lower]=starting()
         st.write("\n:robot_face: E mo' predico. :robot_face:")
 
         ##Modello: predizioni per output
         #nome_modello= os.path.join(os.getcwd(), os.path.normpath('Modello_{}'.format(output_choice)))
-        save=pickle.load(uploaded_model)
-
+ 
         alg=save['Algorithm']
         input=save['Input']
         output_choice=save['Output']
