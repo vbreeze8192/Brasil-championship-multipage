@@ -89,7 +89,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     val_df=val_df.fillna(-1)
     st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
     st.write('Confusion matrix per primo algoritmo')
-    [input,input_lower]=starting()
+    input=save['Input']
     cm = confusion_matrix(val_df[output_choice], alg_w.predict(val_df[input]))
     st.write(cm)
 

@@ -47,7 +47,7 @@ output_select = st.radio(
 nome_modello = st.text_input("Nome della colonna del modello", 'Modello_{}_giorni'.format(output_select))
 [input_total,input_lower]=starting()
 input = st.multiselect(
-    'What are your favorite colors',
+    'Input selezionati:',
     input_total,
     input_total)
 
