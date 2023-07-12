@@ -42,7 +42,7 @@ def starting(print_input='NO'):
 
     if print_input!='NO':
          for item in dict_input:
-              st.write(':red[{}:]       {}'.format(item,dict_input[item]))
+              st.write(':red[{}: ]       {}'.format(item,dict_input[item]))
                        
 
     input_lower=['AVG_ND_3Y_S',\
@@ -99,6 +99,7 @@ def rfc(X_train, y_train,X_test,y_test):
     st.write('Best hyperparameters:',  rand_search.best_params_)
     # Generate predictions with the best model
     y_pred = best_rf.predict(X_test)
+    st.write(rand_search.score(X_test, y_test))
     #confMatrix(y_test, y_pred)
     st.write('Confusion matrix su test set')
     cm = confusion_matrix(y_test,best_rf.predict(X_test))
