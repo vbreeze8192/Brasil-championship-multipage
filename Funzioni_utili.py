@@ -311,8 +311,8 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     #print(original)
 
     #dividi le squadre: crea 2 dataset temporanei che contengono solo le singole squadre home e away e relativo risultato
-    temp_a=original[[col_day,year_col,col_date,col_time,col_a,col_hg,col_ag,'D']]
-    temp_h=original[[col_day,year_col,col_date,col_time,col_h,col_ag,col_hg,'D']]
+    temp_a=original[[col_day,year_col,col_date,col_time,col_a,col_h,col_hg,col_ag,'D']]
+    temp_h=original[[col_day,year_col,col_date,col_time,col_h,col_a,col_ag,col_hg,'D']]
 
     #cambia nome delle colonne 
     temp_a=temp_a.rename(columns={col_a: "SQUADRA",col_h:"SFIDANTE",col_ag: "N_GOAL",col_hg: "N_GOAL_SF"})
