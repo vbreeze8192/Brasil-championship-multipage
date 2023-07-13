@@ -481,7 +481,10 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 line_team[input[11]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL_SF"].std()
 
                 #'AVG_ND_3Y_S_SFID':'Media di non-pareggi per squadra, calcolata sulle stagioni precedenti',\
-                line_team[input[12]]=nd3yrs_sf.loc[squadra].values[0]
+                try:
+                    line_team[input[12]]=nd3yrs_sf.loc[squadra].values[0]
+                except Exception as e:
+                    st.write(":red[Sto avendo problemi con la squadra {}. Forse non c'era nel training, oppure l'hai scritto male!]".format(squadra))
 
                 #'AVG_ND_N_S_SFID':'Media di non-pareggi per squadra, calcolata sulla stagione attuale',\
                 line_team[input[13]]=ndnows_sf[squadra]
