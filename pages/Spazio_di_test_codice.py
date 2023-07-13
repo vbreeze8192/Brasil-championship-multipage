@@ -41,7 +41,7 @@ if st.session_state["button3"]:
 st.write(
     f"""
     ## Session state:
-    {st.session_state["button1"]=}
+    {st.session_state["Predici"]=}
 
     {st.session_state["button2"]=}
 
