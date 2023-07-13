@@ -24,17 +24,10 @@ if st.button("Predici"):
     st.session_state["Predici"] = not st.session_state["Predici"]
     st.write('Clicking button 1')
 
-if st.session_state["Predici"]:
-    if st.button("Button2"):
-        st.session_state["button2"] = not st.session_state["button2"]
-
-if st.session_state["Predici"] and st.session_state["button2"]:
-    if st.button("Button3"):
-        # toggle button3 session state
-        st.session_state["button3"] = not st.session_state["button3"]
-
-if st.session_state["button3"]:
-    st.write("**Button3!!!**")
+    if st.session_state["Predici"]:
+        if st.button("Button2"):
+            st.session_state["button2"] = not st.session_state["button2"]
+            st.write('Secondo bottone')
 
 
 # Print the session state to make it easier to see what's happening
