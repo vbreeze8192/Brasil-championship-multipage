@@ -104,9 +104,10 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.write(new_cm)
 
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
+    #ExplainerDashboard.terminate(8050)
     ExplainerDashboard(explainer).run(mode='external')
-    st.write('attempt')
-    st.write(ExplainerDashboard(explainer).run(mode='external'))
+    ExplainerDashboard.terminate(8050)
+
 
 
   
