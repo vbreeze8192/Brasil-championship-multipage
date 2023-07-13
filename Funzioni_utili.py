@@ -37,6 +37,12 @@ def starting(print_input='NO'):
     'STD_S':'Deviazione standard dei goal per partita nella stagione attuale della squadra di riferimento',\
     'MEAN_S_SFID':'Media dei goal per partita nella stagione attuale della squadra sfidante',\
     'STD_S_SFID':'Deviazione standard dei goal per partita nella stagione attuale della squadra sfidante',\
+    
+    'AVG_ND_3Y_S_SFID':'Media di non-pareggi per squadra, calcolata sulle stagioni precedenti',\
+    'AVG_ND_N_S_SFID':'Media di non-pareggi per squadra, calcolata sulla stagione attuale',\
+    'QTY_ND_3Y_S_SFID':'Media del periodo massimo per stagione di giornate consecutive senza pareggi per squadra, calcolata sulle stagioni precedenti',\
+    'QTY_ND_N_S_SFID':'Quantità di giornate consecutive senza pareggi per squadra sulla stagione attuale',\
+    
     'HOUR':'Ora della partita',\
     'HoA':'Indicazione su Home o Away (0: Away, 1: Home)'}
 
@@ -309,8 +315,8 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     temp_h=original[[col_day,year_col,col_date,col_time,col_h,col_ag,col_hg,'D']]
 
     #cambia nome delle colonne 
-    temp_a=temp_a.rename(columns={col_a: "SQUADRA", col_ag: "N_GOAL",col_hg: "N_GOAL_SF"})
-    temp_h=temp_h.rename(columns={col_h: "SQUADRA", col_hg: "N_GOAL", col_ag: "N_GOAL_SF"})
+    temp_a=temp_a.rename(columns={col_a: "SQUADRA",col_h:"SFIDANTE",col_ag: "N_GOAL",col_hg: "N_GOAL_SF"})
+    temp_h=temp_h.rename(columns={col_h: "SQUADRA",col_a:"SFIDANTE", col_hg: "N_GOAL", col_ag: "N_GOAL_SF"})
     temp_a['HoA']='0'
     temp_h['HoA']='1'
 
@@ -356,7 +362,12 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
     #[nd3yrs,qtymax3yrs]=team_metrics(df3yr,squadre) 
     qty=pd.DataFrame(index=anni)
     ndr=pd.DataFrame(index=anni)
+
+    qty_s=pd.DataFrame(index=anni)
+    ndr_s=pd.DataFrame(index=anni)
+
     for anno in anni:
+        #SQUADRA
         temp=df3yr[df3yr[year_col]==anno]
         [ndt,qtyt]=team_metrics(temp,squadre)
 
@@ -365,8 +376,22 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
         qtyt=qtyt.rename(columns={"index": "SQUADRA"})
         qty=pd.concat([qty,qtyt]) #concateno anno su anno
         ndr=pd.concat([ndr,ndt])
+
+        #SFIDANTE
+        temp=df3yr[df3yr[year_col]==anno]
+        [ndt_s,qtyt_s]=team_metrics(temp,squadre,col_squadre='SFIDANTE')
+
+        ndt_s=ndt_s.reset_index()
+        qtyt_s=qtyt_s.reset_index()
+        qtyt=qtyt.rename(columns={"index": "SQUADRA"})
+        qty_s=pd.concat([qty,qtyt]) #concateno anno su anno
+        ndr_s=pd.concat([ndr,ndt])
+
     nd3yrs=ndr.groupby('SQUADRA').mean() #questo dovrebbe fare la media per squadra
     qtymax3yrs=qty.groupby('SQUADRA').mean()
+    nd3yrs_sf=ndr_s.groupby('SQUADRA').mean()
+    qtymax3yrs_sf=qty_s.groupby('SQUADRA').mean()
+
     #raw è la rappresentazione dell'anno in corso. 
     #sul singolo anno di validazione, valuta sia i gol nel futuro veri, sia la predizione fatta dal modello. 
     raw_complete=raw.copy()
@@ -417,7 +442,7 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
             squadre_day=list(df_period.groupby(['SQUADRA']).mean().index)
             [avgnowch,avgdxdnowch]=champions_metrics(df_period,col_day=col_day)
             [ndnows,qtymaxnows]=team_metrics(df_period,squadre)
-
+            [ndnows_sf,qtymaxnows_sf]=team_metrics(df_period,squadre,col_squadre='SFIDANTE')
 
             for squadra in squadre_day:
                 line_df=df_period[df_period[col_day]==day_iter]
@@ -453,7 +478,22 @@ def doyourstupidthings(name,year_col,col_day,anni,anno_val,day='NA',what='pred',
                 line_team[input[8]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].mean()
                 line_team[input[9]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL"].std()
                 line_team[input[10]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL_SF"].mean()
-                line_team[input[11]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL_SF"].std()               
+                line_team[input[11]]=df_period[df_period["SQUADRA"]==squadra]["N_GOAL_SF"].std()
+
+                #'AVG_ND_3Y_S_SFID':'Media di non-pareggi per squadra, calcolata sulle stagioni precedenti',\
+                line_team[input[12]]=nd3yrs_sf.loc[squadra].values[0]
+
+                #'AVG_ND_N_S_SFID':'Media di non-pareggi per squadra, calcolata sulla stagione attuale',\
+                line_team[input[13]]=ndnows_sf[squadra]
+
+                #'QTY_ND_3Y_S_SFID':'Media del periodo massimo per stagione di giornate consecutive senza pareggi per squadra, calcolata sulle stagioni precedenti',\
+                line_team[input[14]]=qtymax3yrs_sf.loc[squadra].values[0]                
+                
+                #'QTY_ND_N_S_SFID':'Quantità di giornate consecutive senza pareggi per squadra sulla stagione attuale',\
+                line_team[input[15]]=qtymaxnows_sf.loc[squadra].values[0]
+                    
+
+
 
                 int_df=pd.concat([int_df,line_team])
 
