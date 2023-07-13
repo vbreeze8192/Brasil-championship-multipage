@@ -38,10 +38,10 @@ def starting(print_input='NO'):
     'MEAN_S_SFID':'Media dei goal per partita nella stagione attuale della squadra sfidante',\
     'STD_S_SFID':'Deviazione standard dei goal per partita nella stagione attuale della squadra sfidante',\
     
-    'AVG_ND_3Y_S_SFID':'Media di non-pareggi per squadra, calcolata sulle stagioni precedenti',\
-    'AVG_ND_N_S_SFID':'Media di non-pareggi per squadra, calcolata sulla stagione attuale',\
-    'QTY_ND_3Y_S_SFID':'Media del periodo massimo per stagione di giornate consecutive senza pareggi per squadra, calcolata sulle stagioni precedenti',\
-    'QTY_ND_N_S_SFID':'Quantità di giornate consecutive senza pareggi per squadra sulla stagione attuale',\
+    'AVG_ND_3Y_S_SFID':'Media di non-pareggi per sfidante, calcolata sulle stagioni precedenti',\
+    'AVG_ND_N_S_SFID':'Media di non-pareggi per sfidante, calcolata sulla stagione attuale',\
+    'QTY_ND_3Y_S_SFID':'Media del periodo massimo per stagione di giornate consecutive senza pareggi per sfidante, calcolata sulle stagioni precedenti',\
+    'QTY_ND_N_S_SFID':'Quantità di giornate consecutive senza pareggi per sfidante sulla stagione attuale',\
     
     'HOUR':'Ora della partita',\
     'HoA':'Indicazione su Home o Away (0: Away, 1: Home)'}
