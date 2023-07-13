@@ -528,8 +528,8 @@ def talk(day_iter,output_choice,final_df):
         for ii in range(0,7):
             sq=final_df['SQUADRA'].iloc[ii]
             pred=final_df['{}_pred'.format(output_choice)].iloc[ii]
-            prob=final_df['{}_probB'.format(output_choice)].iloc[ii]
-            oth=final_df['{}_probA'.format(output_choice)].iloc[ii]
+            prob=final_df['{}_prob1'.format(output_choice)].iloc[ii]
+            oth=final_df['{}_prob0'.format(output_choice)].iloc[ii]
             st.write('	:soccer: Squadra: **:blue[{}]**, probabilità di pareggio: {} %'.format(sq,np.floor(prob*100)))
 
         st.write("___________________________________________")
@@ -537,8 +537,8 @@ def talk(day_iter,output_choice,final_df):
         for ii in range(1,8):
             sq=final_df['SQUADRA'].iloc[-ii]
             pred=final_df['{}_pred'.format(output_choice)].iloc[-ii]
-            prob=final_df['{}_probB'.format(output_choice)].iloc[-ii]
-            oth=final_df['{}_probA'.format(output_choice)].iloc[-ii]
+            prob=final_df['{}_prob1'.format(output_choice)].iloc[-ii]
+            oth=final_df['{}_prob0'.format(output_choice)].iloc[-ii]
             st.write('	:soccer: Squadra: **:blue[{}]**, probabilità di pareggio: {} %'.format(sq,np.floor(prob*100)))
         st.write('___________________________________________')
         if final_df['{}_probB'.format(output_choice)].mean()==1:
