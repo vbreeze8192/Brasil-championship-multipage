@@ -84,7 +84,7 @@ def rfc(X_train, y_train,X_test,y_test):
     #np.random.randint(50,high=500)
     param_dist = {'n_estimators': [20,50,100,200,300,400,500,600],
             'max_depth': [10,30,50,60,100,150,200,250], 'min_samples_split':[2, 3, 5, 7,9,12],
-                'criterion':['gini', 'entropy', 'log_loss'], 'min_samples_leaf':[1,2,3]}
+                'criterion':['gini', 'entropy', 'log_loss'], 'min_samples_leaf':[1,2,3],'class_weight':['balanced', 'balanced_subsample','None']}
 
     # Create a random forest classifier
     rf = RandomForestClassifier()
