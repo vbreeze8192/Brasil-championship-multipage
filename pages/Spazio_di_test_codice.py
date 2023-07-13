@@ -17,17 +17,15 @@ if "Predici" not in st.session_state:
 if "button2" not in st.session_state:
     st.session_state["button2"] = False
 
-if "button3" not in st.session_state:
-    st.session_state["button3"] = False
 
 if st.button("Predici"):
     st.session_state["Predici"] = not st.session_state["Predici"]
     st.write('Clicking button 1')
 
-    if st.session_state["Predici"]:
-        if st.button("Button2"):
-            st.session_state["button2"] = not st.session_state["button2"]
-            st.write('Secondo bottone')
+if st.session_state["Predici"]:
+    if st.button("Button2"):
+        st.session_state["button2"] = not st.session_state["button2"]
+        st.write('Secondo bottone')
 
 
 # Print the session state to make it easier to see what's happening
