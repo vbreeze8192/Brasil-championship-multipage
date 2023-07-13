@@ -94,7 +94,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)])
     st.write(cm)
 
-    probtarget='{}_probA'.format(output_choice)
+    probtarget='{}_prob1'.format(output_choice)
     
 
     limite_prob=float(limite_prob)
@@ -102,6 +102,7 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.write('Confusion matrix con nuova probabilità')
     new_cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)])
     st.write(new_cm)
+    ##TODO capire perché prevede tutto 0??
 
 
   

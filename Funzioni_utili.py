@@ -500,8 +500,8 @@ def prediction(save,output_choice,final_df,input_lower='na'):
         #alg=uploaded_model['Algorithm']
 
         final_df['{}_pred'.format(output_choice)]=alg.predict(final_df[input])
-        final_df['{}_probA'.format(output_choice)]=alg.predict_proba(final_df[input])[:,0]
-        final_df['{}_probB'.format(output_choice)]=alg.predict_proba(final_df[input])[:,1]
+        final_df['{}_prob0'.format(output_choice)]=alg.predict_proba(final_df[input])[:,0]
+        final_df['{}_prob1'.format(output_choice)]=alg.predict_proba(final_df[input])[:,1]
         final_df=final_df.dropna()
         alg_w=alg
          ##Modello: predizioni per output, con meno input
@@ -522,7 +522,7 @@ def talk(day_iter,output_choice,final_df):
         st.subheader("""Prima versione""")
         st.write('Questi risultati sono ottenuti con modelli allenati su questi input:')
 
-        final_df=final_df.sort_values('{}_probA'.format(output_choice))
+        final_df=final_df.sort_values('{}_prob1'.format(output_choice))
         
         st.write('Valutando {}, nella giornata {} dovresti investire su: :moneybag:'.format(output_choice,day_iter))
         for ii in range(0,7):
