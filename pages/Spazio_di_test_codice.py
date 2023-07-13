@@ -11,8 +11,8 @@ with st.sidebar:
 
 st.write("# This works:")
 
-if "button1" not in st.session_state:
-    st.session_state["button1"] = False
+if "Predici" not in st.session_state:
+    st.session_state["Predici"] = False
 
 if "button2" not in st.session_state:
     st.session_state["button2"] = False
@@ -20,8 +20,9 @@ if "button2" not in st.session_state:
 if "button3" not in st.session_state:
     st.session_state["button3"] = False
 
-if st.button("Button1"):
-    st.session_state["button1"] = not st.session_state["button1"]
+if st.button("Predici"):
+    st.session_state["Predici"] = not st.session_state["Predici"]
+    st.write('Clicking button 1')
 
 if st.session_state["button1"]:
     if st.button("Button2"):
