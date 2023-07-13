@@ -102,7 +102,11 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
     st.write('Confusion matrix con nuova probabilità')
     new_cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)])
     st.write(new_cm)
-    ##TODO capire perché prevede tutto 0??
+
+    explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
+    ExplainerDashboard(explainer).run(mode='external')
+    st.write('attempt')
+    st.write(ExplainerDashboard(explainer).run(mode='external'))
 
 
   
