@@ -565,7 +565,8 @@ def talk(day_iter,output_choice,final_df):
         st.subheader("""Prima versione""")
         st.write('Questi risultati sono ottenuti con modelli allenati su questi input:')
 
-        final_df=final_df.sort_values('{}_prob1'.format(output_choice))
+        #ordino dalla probabilità di 0 più piccola alla più grande
+        final_df=final_df.sort_values('{}_prob0'.format(output_choice))
         
         st.write('Valutando {}, nella giornata {} dovresti investire su: :moneybag:'.format(output_choice,day_iter))
         for ii in range(0,7):
