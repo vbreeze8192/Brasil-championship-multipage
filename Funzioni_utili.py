@@ -584,7 +584,7 @@ def talk(day_iter,output_choice,final_df):
             oth=final_df['{}_prob0'.format(output_choice)].iloc[-ii]
             st.write('	:soccer: Squadra: **:blue[{}]**, probabilità di pareggio: {} %'.format(sq,np.floor(prob*100)))
         st.write('___________________________________________')
-        if final_df['{}_probB'.format(output_choice)].mean()==1:
+        if final_df['{}_prob1'.format(output_choice)].mean()==1:
             st.write('Mah, ste probabilità so tutte uguali a 1. Grazie al c:sparkles:...')
 
 
