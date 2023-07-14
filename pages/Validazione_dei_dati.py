@@ -105,9 +105,9 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
 
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
     #ExplainerDashboard.terminate(8050)
-    ExplainerDashboard(explainer).run(host='0.0.0.0', port=8080, mode='external')
+    ExplainerDashboard(explainer).run(host='0.0.0.0', port=8000, mode='external')
     
-    dashboardurl = 'http://127.0.0.1:8080'
+    dashboardurl = 'http://127.0.0.1:8000'
     st.components.v1.iframe(dashboardurl, width=None, height=900, scrolling=True)
 
 
