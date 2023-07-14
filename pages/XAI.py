@@ -10,6 +10,7 @@ from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, confusion_ma
 import shap
 from explainerdashboard import ClassifierExplainer,ExplainerDashboard, ExplainerHub
 import streamlit.components.v1 as components
+import plotly.express as px
 
 #General
 from os import walk
@@ -87,8 +88,10 @@ if st.button('Go go go',disabled=not(uploaded_file and uploaded_model), type='pr
         val_df=pd.concat([val_df,temp])
         
     explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
+    fig = explainer.plot_importances()
+    st.plotly_chart(fig)
     #ExplainerDashboard.terminate(8050)
-    ExplainerDashboard(explainer).run(host='0.0.0.0', port=8000, mode='inline')
+    #ExplainerDashboard(explainer).run(host='0.0.0.0', port=8000, mode='inline')
     
 
 
