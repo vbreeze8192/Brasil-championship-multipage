@@ -7,6 +7,8 @@ import numpy as np
 from datetime import datetime, date,timedelta
 import streamlit as st
 from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, confusion_matrix
+import shap
+from explainerdashboard import ClassifierExplainer,ExplainerDashboard, ExplainerHub
 import streamlit.components.v1 as components
 
 #General
@@ -22,11 +24,11 @@ download_excel,file_selector,doyourstupidthings, prediction, starting
 
 
 ###MAIN###
-st.sidebar.markdown("# Validazione nel passato🎈")
+st.sidebar.markdown("# Explain AI🎈")
 
 with st.sidebar:
-    st.write('Qui facciamo le validazioni. ')
-st.title('Validazione nel passato')
+    st.write('Qui facciamo le analisi XAI. ')
+st.title('Analisi XAI')
 
 st.subheader("""Cosa vorresti validare?""")
 st.write('Il modello è allenato per il periodo 2012-2022 della championship del Brasile.')
@@ -64,7 +66,7 @@ uploaded_model = st.file_uploader("Carica modello. Limite: 200MB")
 outputs=['D_in_4iter','D_in_3iter','D_in_2iter','D_in_1iter']
 uploaded_file = st.file_uploader("Carica excel", type=".xlsx")
 
-if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_model), type='primary'):
+if st.button('Go go go',disabled=not(uploaded_file and uploaded_model), type='primary'):
     st.write(':leaves:')
     save=pickle.load(uploaded_model)
     output_select=save['Predict_future']
@@ -83,20 +85,12 @@ if st.button('Prevedi for Braaasil',disabled=not(uploaded_file and uploaded_mode
         temp=temp.reset_index()
         (temp,outputs)=d_in_future(temp,4)
         val_df=pd.concat([val_df,temp])
-    st.write('Ecco i dati completi')
-    download_excel(val_df,name_exc='Prediction_Complete_{}'.format(anno_val))
-    val_df=val_df.fillna(-1)
-    st.write('Ordine: vero negativo, falso positivo, falso negativo, vero positivo')
-    st.write('Confusion matrix')
-    input=save['Input']
-    cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)])
-    st.write(cm)
-
-    probtarget='{}_prob1'.format(output_choice)
+        
+    explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
+    #ExplainerDashboard.terminate(8050)
+    ExplainerDashboard(explainer).run(host='0.0.0.0', port=8000, mode='inline')
     
 
-    limite_prob=float(limite_prob)
-    val_df['{}_pred'.format(output_choice)].loc[val_df[probtarget]>limite_prob]=1
-    st.write('Confusion matrix con nuova probabilità')
-    new_cm = confusion_matrix(val_df[output_choice], val_df['{}_pred'.format(output_choice)])
-    st.write(new_cm)
+
+
+  
