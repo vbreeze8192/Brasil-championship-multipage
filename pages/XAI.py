@@ -86,9 +86,10 @@ if st.button('Go go go',disabled=not(uploaded_file and uploaded_model), type='pr
         temp=temp.reset_index()
         (temp,outputs)=d_in_future(temp,4)
         val_df=pd.concat([val_df,temp])
-        
-    explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
-    fig = explainer.plot_importances()
+    st.write('Predizioni fatte! Provo a spiegarmele...')
+    with st.spinner('Penso...'):
+        explainer = ClassifierExplainer(alg_w, val_df[input], val_df[output_choice])
+        fig = explainer.plot_importances()
     st.plotly_chart(fig)
     #ExplainerDashboard.terminate(8050)
     #ExplainerDashboard(explainer).run(host='0.0.0.0', port=8000, mode='inline')
